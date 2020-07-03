@@ -30,7 +30,7 @@ Item {
                 else
                     return "#ffffff"
             }
-            text: "Get started"
+            text: "Get Started"
             font.pixelSize: 17
         }
     }
@@ -44,11 +44,4 @@ Item {
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
     }
-
 }
-
-/*##^##
-Designer {
-    D{i:1;anchors_height:40;anchors_width:100;anchors_x:0;anchors_y:0}
-}
-##^##*/

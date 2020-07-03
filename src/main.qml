@@ -1,5 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
+import QtQuick.Controls 2.15
+import "./Pages"
 
 Window {
     title: qsTr("Alive")
@@ -12,31 +14,13 @@ Window {
     color: "#36393f"
     visible: true
 
-    Text {
-        id: element
-        x: 399
-        y: 203
-        color: "#ffffff"
-        text: qsTr("Alive")
-        lineHeight: 1
-        antialiasing: false
-        font.pixelSize: 50
+    StackView {
+        id: stack
+        initialItem: welcomePage
+        anchors.fill: parent
     }
 
-    Text {
-        id: element1
-        x: 213
-        y: 285
-        color: "#ffffff"
-        text: "Decentralized live streaming on DTube chain"
-        font.pixelSize: 25
-    }
-
-    Button1 {
-        id: button1
-        x: 388
-        y: 357
-    }
+    Welcome { id: welcomePage }
 }
 
 
