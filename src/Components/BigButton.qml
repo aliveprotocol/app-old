@@ -1,6 +1,8 @@
 import QtQuick 2.0
 
 Item {
+    property alias btnLabel: label.text
+    property alias btnMouseArea: mouseArea
     width: 125
     height: 50
 
@@ -21,16 +23,18 @@ Item {
         border.color: "#ffffff"
 
         Text {
-            id: element
-            x: 19
+            id: label
+            x: 8
             y: 15
+            width: 109
+            height: 20
             color: {
                 if (mouseArea.containsMouse)
                     return "#36393f"
                 else
                     return "#ffffff"
             }
-            text: "Get Started"
+            horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 17
         }
     }
@@ -45,3 +49,9 @@ Item {
         cursorShape: Qt.PointingHandCursor
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;formeditorZoom:3}
+}
+##^##*/

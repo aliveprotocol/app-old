@@ -2,6 +2,7 @@ import QtQuick 2.0
 import "../Components"
 
 Item {
+    property alias getStartedMouseArea: getStartedBtn.btnMouseArea
     Text {
         id: appTitle
         x: 399
@@ -22,9 +23,10 @@ Item {
         font.pixelSize: 25
     }
 
-    GetStartedBtn {
+    BigButton {
         id: getStartedBtn
         x: 388
         y: 357
+        btnLabel: "Get Started"
     }
 }

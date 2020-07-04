@@ -15,12 +15,30 @@ Window {
     visible: true
 
     StackView {
-        id: stack
+        id: setupStack
         initialItem: welcomePage
         anchors.fill: parent
     }
 
-    Welcome { id: welcomePage }
+    Welcome {
+        id: welcomePage
+        getStartedMouseArea.onClicked: {
+            // Get started button mouseArea.onClicked()
+            setupStack.push(dtcLoginPage)
+        }
+    }
+
+    DTCLogin {
+        id: dtcLoginPage
+        visible: false
+        proceedLoginBtnMouseArea.onClicked: {
+            let dtclogin = dtcLogin.auth(dtcLoginPage.dtcUsername, dtcLoginPage.dtcKey)
+            if (dtclogin)
+                console.log("Correct key")
+            else
+                console.log("Wrong key")
+        }
+    }
 }
 
 
