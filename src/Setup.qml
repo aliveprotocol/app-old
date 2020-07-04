@@ -24,25 +24,29 @@ Item {
     DTCLogin {
         id: dtcLoginPage
         visible: false
-        proceedLoginBtnMouseArea.onClicked: {
-            let dtclogin = dtcLogin.auth(dtcLoginPage.dtcUsername, dtcLoginPage.dtcKey)
-            switch (dtclogin) {
-            case 0:
-                toast.show("Logged in with custom key successfully",3000,1)
-                stack.push(createPinPage)
-                break
-            case 1:
-                toast.show("Logged in with master key successfully",3000,1)
-                stack.push(createPinPage)
-                break
-            case 2:
-                toast.show("Invalid username",3000,3)
-                break
-            case 3:
-                toast.show("Invalid key",3000,3)
-                break
-            default:
-                toast.show("Unknown error",3000,3)
+        proceedLoginBtnMouseArea.onClicked: dtcLoginBridge.startSignal(dtcLoginPage.dtcUsername, dtcLoginPage.dtcKey)
+
+        Connections {
+            target: dtcLoginBridge
+            function onLoginResult(result) {
+                switch (result) {
+                case 0:
+                    toast.show("Logged in with custom key successfully",3000,1)
+                    stack.push(createPinPage)
+                    break
+                case 1:
+                    toast.show("Logged in with master key successfully",3000,1)
+                    stack.push(createPinPage)
+                    break
+                case 2:
+                    toast.show("Invalid username",3000,3)
+                    break
+                case 3:
+                    toast.show("Invalid key",3000,3)
+                    break
+                default:
+                    toast.show("Unknown error",3000,3)
+                }
             }
         }
     }
