@@ -60,6 +60,16 @@ Item {
         y: 400
         btnLabel: qsTr("Login")
     }
+
+    Text {
+        id: element
+        x: 295
+        y: 510
+        color: "#ffffff"
+        text: qsTr("No account? Get one at signup.d.tube.")
+        horizontalAlignment: Text.AlignHCenter
+        font.pixelSize: 18
+    }
 }
 
 
