@@ -15,6 +15,7 @@ ListView {
       *
       * @param {string} text Text to show
       * @param {real} duration Duration to show in milliseconds, defaults to 3000
+      * @param {real} toastType Type of toast to show (0: info, 1: success, 2: warning, 3: error)
       */
     function show(text, duration, toastType) {
         model.insert(0, {text: text, duration: duration, toastType: toastType});
@@ -30,7 +31,10 @@ ListView {
     spacing: 5
     anchors.fill: parent
     anchors.bottomMargin: 10
-    verticalLayoutDirection: ListView.BottomToTop
+
+    // ListView.TopToBottom - Toasts at top
+    // ListView.BottomToTop - Toasts at bottom
+    verticalLayoutDirection: ListView.TopToBottom
 
     interactive: false
 

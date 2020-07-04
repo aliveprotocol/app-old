@@ -3,36 +3,30 @@ import QtQuick 2.0
 Item {
     property alias btnLabel: label.text
     property alias btnMouseArea: mouseArea
-    width: 125
+    property var selected
+
+    width: 200
     height: 50
 
     Rectangle {
         id: rectangle
         color: {
-            if (mouseArea.containsMouse)
-                return "#ffffff"
-            else
+            if (mouseArea.containsMouse || selected)
                 return "#36393f"
+            else
+                return "#222222"
         }
         anchors.margins: 0
         anchors.fill: parent
-        border.width: 2
-        border.color: "#ffffff"
 
         Text {
             id: label
-            x: 8
+            x: 30
             y: 15
-            width: 109
+            width: 162
             height: 20
-            color: {
-                if (mouseArea.containsMouse)
-                    return "#36393f"
-                else
-                    return "#ffffff"
-            }
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 17
+            color: "#ffffff"
+            font.pixelSize: 18
         }
     }
 
@@ -40,15 +34,9 @@ Item {
         id: mouseArea
         x: 0
         y: 0
-        width: 125
+        width: 200
         height: 50
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;formeditorZoom:3}
-}
-##^##*/

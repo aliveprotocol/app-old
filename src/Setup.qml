@@ -8,6 +8,7 @@ Item {
     property var toast
     property var stack
     property var welcomeView: welcomePage
+    property var callback
 
     width: 900
     height: 600
@@ -56,6 +57,8 @@ Item {
                 return toast.show("New PIN and Confirm PIN does not match",3000,3)
             toast.show("PIN created successfully",3000,1)
             // TODO: Store auth details
+            createPinPage.visible = false
+            callback()
         }
     }
 }

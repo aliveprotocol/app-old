@@ -1,7 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Window 2.15
-import QtQuick.Controls 2.15
-import "./Pages"
+import QtQuick 2.14
+import QtQuick.Window 2.14
+import QtQuick.Controls 2.14
 import "./Components"
 
 Window {
@@ -26,13 +25,24 @@ Window {
         id: setupView
         toast: toastManager
         stack: setupStack
+        callback: switchToMainView
     }
 
     // MAIN UI
-
+    MainUI {
+        id: mainView
+        visible: false
+        toast: toastManager
+    }
 
     // TOASTS
     ToastManager { id: toastManager }
+
+    // SWITCH TO MAIN VIEW
+    function switchToMainView() {
+        setupView.visible = false
+        mainView.visible = true
+    }
 }
 
 
