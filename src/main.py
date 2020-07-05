@@ -8,6 +8,9 @@ from PySide2 import QtCore
 
 import auth
 
+def handle_exit():
+    workerThread.quit()
+
 if __name__ == "__main__":
     app = QGuiApplication(sys.argv)
     engine = QQmlApplicationEngine()
@@ -24,6 +27,9 @@ if __name__ == "__main__":
 
     # Load QML files
     engine.load(os.path.join(os.path.dirname(__file__), "main.qml"))
+
+    # Handle app termination
+    app.lastWindowClosed.connect(handle_exit)
 
     if not engine.rootObjects():
         sys.exit(-1)
