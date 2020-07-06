@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import "../Helpers/growInt.js" as GrowInt
 
 Item {
     id: resourcesTopBar
@@ -12,11 +13,8 @@ Item {
     Connections {
         target: dtcGetAccountBridge
         function onAccountResult(result) {
-            if (result !== "Error") {
-                let resultObj = JSON.parse(result)
-                balanceInfo.text = "Balance: " + (resultObj.balance / 100) + " DTC"
-                bandwidthInfo.text = "BW: " + (resultObj.bw.v) + " bytes"
-            }
+            if (result !== "Error")
+                updateDisplay(result)
         }
     }
 
@@ -49,5 +47,16 @@ Item {
         anchors.right: bandwidthInfo.left
         anchors.rightMargin: 50
         verticalAlignment: Text.AlignVCenter
+    }
+
+    function updateDisplay(detail) {
+        let detailObj = JSON.parse(detail)
+        let grownBw = new GrowInt.GrowInt(detailObj.bw, {
+                growth: detailObj.balance / 36000000,
+                max: 64000
+            }).grow(new Date().getTime()).v
+
+        balanceInfo.text = "Balance: " + (detailObj.balance / 100) + " DTC"
+        bandwidthInfo.text = "BW: " + grownBw + " bytes"
     }
 }
