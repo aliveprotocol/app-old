@@ -6,7 +6,7 @@ from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2 import QtCore
 
-import auth
+import dtc
 
 def handle_exit():
     workerThread.quit()
@@ -20,10 +20,15 @@ if __name__ == "__main__":
     workerThread.start()
 
     # Signal slots
-    dtcLogin = auth.DTCLogin()
+    dtcLogin = dtc.DTCLogin()
     dtcLogin.moveToThread(workerThread)
-    dtcLoginBridge = auth.DTCLoginBridge(dtcLogin)
+    dtcLoginBridge = dtc.DTCLoginBridge(dtcLogin)
     engine.rootContext().setContextProperty("dtcLoginBridge", dtcLoginBridge)
+
+    dtcGetAccount = dtc.GetAccount()
+    dtcGetAccount.moveToThread(workerThread)
+    dtcGetAccountBridge = dtc.GetAccountBridge(dtcGetAccount)
+    engine.rootContext().setContextProperty("dtcGetAccountBridge", dtcGetAccountBridge)
 
     # Load QML files
     engine.load(os.path.join(os.path.dirname(__file__), "main.qml"))

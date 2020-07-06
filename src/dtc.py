@@ -20,7 +20,6 @@ class DTCLogin(QObject):
     @Slot(str, str)
     def auth(self, username, private_key):
         # TODO: Move API to settings page accessible from anywhere in app
-        # Should this be in a dedicated Avalon Python library?
         avalon_account = requests.get('https://avalon.oneloved.tube/account/' + username)
         if avalon_account.status_code != 200:
             self.loginResult.emit(2)
@@ -42,3 +41,24 @@ class DTCLogin(QObject):
                 self.loginResult.emit(0)
         else:
             self.loginResult.emit(1)
+
+class GetAccountBridge(QObject):
+    startSignal = Signal(str)
+    accountResult = Signal(str, arguments=['result'])
+
+    def __init__(self, obj, parent=None):
+        super().__init__(parent)
+        self.m_obj = obj
+        self.m_obj.accountResult.connect(self.accountResult)
+        self.startSignal.connect(self.m_obj.getAccount)
+
+class GetAccount(QObject):
+    accountResult = Signal(str)
+
+    @Slot(str)
+    def getAccount(self,username):
+        account = requests.get('https://avalon.oneloved.tube/account/' + username)
+        if account.status_code != 200:
+            self.accountResult.emit("Error")
+        else:
+            self.accountResult.emit(account.text)

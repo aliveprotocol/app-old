@@ -2,20 +2,27 @@ import QtQuick 2.14
 import QtQuick.Controls 2.14
 import QtQuick.Layouts 1.14
 import "./Components"
+import "./Pages"
 
 Item {
+    id: element
     property var toast
     property int tabIndex: 0
 
     width: 900
     height: 600
 
+    // Menu
     Rectangle {
-        x: 0
-        y: 0
         width: 200
-        height: 600
+
         color: "#222222"
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 0
 
         ColumnMenuButton {
             id: dashboardMenuBtn
@@ -66,13 +73,38 @@ Item {
         }
     }
 
+    // Top bar for available balances and bandwidth
+    ResourcesTopBar {
+        id: resourcesTopBar
+        anchors.left: parent.left
+        anchors.leftMargin: 200
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 0
+        anchors.bottom: stackLayout.top
+        anchors.bottomMargin: 0
+    }
+
+    // Content
     StackLayout {
         id: stackLayout
-        x: 200
-        y: 0
-        width: 700
-        height: 600
-        currentIndex: -1
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 200
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 50
+        currentIndex: tabIndex
+
+        Dashboard { id: dashboard }
+        NewStream { id: newStream }
+        GoLive { id: goLive }
+        RecentStreams { id: recentStreams }
+        UserSettings { id: userSettings }
+        AccountSettings { id: accountSettings }
     }
 }
 
