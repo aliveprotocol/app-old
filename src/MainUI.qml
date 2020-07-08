@@ -5,7 +5,7 @@ import "./Components"
 import "./Pages"
 
 Item {
-    id: element
+    id: mainUI
     property var toast
     property int tabIndex: 0
 

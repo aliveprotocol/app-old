@@ -7,11 +7,11 @@ Item {
     onVisibleChanged: {
         // Load balance and bandwidth info
         if (resourcesTopBar.visible)
-            dtcGetAccountBridge.startSignal("techcoderx")
+            dtcGetAccBridge.startSignal("techcoderx")
     }
 
     Connections {
-        target: dtcGetAccountBridge
+        target: dtcGetAccBridge
         function onAccountResult(result) {
             if (result !== "Error")
                 updateDisplay(result)
@@ -56,7 +56,14 @@ Item {
                 max: 64000
             }).grow(new Date().getTime()).v
 
-        balanceInfo.text = "Balance: " + (detailObj.balance / 100) + " DTC"
-        bandwidthInfo.text = "BW: " + grownBw + " bytes"
+        balanceInfo.text = "Balance: " + thousandSeperator(detailObj.balance / 100) + " DTC"
+        bandwidthInfo.text = "BW: " + thousandSeperator(grownBw) + " bytes"
+    }
+
+    function thousandSeperator(num) {
+        var num_parts = num.toString().split(".")
+        num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        num_parts[0] = num_parts[0].replace(",,",",")
+        return num_parts.join(".")
     }
 }
