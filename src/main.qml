@@ -9,8 +9,6 @@ Window {
     height: 600
     minimumWidth: 900
     minimumHeight: 600
-    maximumWidth: 900
-    maximumHeight: 600
     color: "#36393f"
     visible: true
 

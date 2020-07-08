@@ -9,8 +9,7 @@ Item {
     property var toast
     property int tabIndex: 0
 
-    width: 900
-    height: 600
+    anchors.fill: parent
 
     // Menu
     Rectangle {

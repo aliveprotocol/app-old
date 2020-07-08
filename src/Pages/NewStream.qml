@@ -21,7 +21,7 @@ Item {
                 topMargin: 0
             }
             color: "#36393f"
-            implicitHeight: 750
+            implicitHeight: 700
 
             Text {
                 id: titleLbl
@@ -63,7 +63,7 @@ Item {
 
             Rectangle {
                 id: descriptionItm
-                height: 160
+                height: 100
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.left: parent.left

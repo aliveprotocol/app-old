@@ -3,29 +3,30 @@ import QtQuick.Controls 1.4
 import "../Components"
 
 Item {
+    id: element
     property alias confirmPinBtnMouseArea: confirmPinBtn.btnMouseArea
     property alias newPin: newPinField.text
     property alias confirmPin: confirmPinField.text
-    width: 900
-    height: 600
 
     Text {
         id: createPinTitle
-        x: 306
-        y: 80
         color: "#ffffff"
         text: qsTr("Choose a PIN")
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: createPinDescription.top
+        anchors.bottomMargin: 30
         font.pixelSize: 50
     }
 
     Text {
         id: createPinDescription
-        x: 82
-        y: 169
         width: 736
         height: 48
         color: "#ffffff"
         text: qsTr("Create a PIN number to secure your private keys in the application. PIN numbers must be at least 4 digits long.")
+        anchors.bottom: newPinField.top
+        anchors.bottomMargin: 70
+        anchors.horizontalCenter: parent.horizontalCenter
         horizontalAlignment: Text.AlignLeft
         wrapMode: Text.WordWrap
         font.pixelSize: 18
@@ -33,8 +34,6 @@ Item {
 
     TextField {
         id: newPinField
-        x: 277
-        y: 287
         width: 347
         height: 26
         readOnly: false
@@ -43,12 +42,12 @@ Item {
         echoMode: TextInput.Password
         inputMethodHints: Qt.ImhDigitsOnly
         validator: RegExpValidator{regExp: /[0-9]+/}
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
     }
 
     TextField {
         id: confirmPinField
-        x: 277
-        y: 333
         width: 347
         height: 26
         placeholderText: "Confirm PIN"
@@ -57,12 +56,16 @@ Item {
         echoMode: TextInput.Password
         inputMethodHints: Qt.ImhDigitsOnly
         validator: RegExpValidator{regExp: /[0-9]+/}
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: newPinField.bottom
+        anchors.topMargin: 20
     }
 
     BigButton {
         id: confirmPinBtn
-        x: 388
-        y: 400
+        anchors.top: confirmPinField.bottom
+        anchors.topMargin: 40
+        anchors.horizontalCenter: parent.horizontalCenter
         btnLabel: qsTr("Confirm")
     }
 }

@@ -10,8 +10,7 @@ Item {
     property var welcomeView: welcomePage
     property var callback
 
-    width: 900
-    height: 600
+    anchors.fill: parent
 
     Welcome {
         id: welcomePage
