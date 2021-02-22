@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.15
 import "../Components"
 
 Item {
@@ -19,7 +19,7 @@ Item {
     Text {
         id: appDescription
         color: "#ffffff"
-        text: "Decentralized live streaming on DTube chain"
+        text: "Decentralized live streaming on Hive and Avalon"
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         font.pixelSize: 25

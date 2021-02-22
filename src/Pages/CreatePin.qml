@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.4
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 import "../Components"
 
 Item {
@@ -38,10 +38,9 @@ Item {
         height: 26
         readOnly: false
         placeholderText: "New PIN"
-        textColor: "#000000"
         echoMode: TextInput.Password
         inputMethodHints: Qt.ImhDigitsOnly
-        validator: RegExpValidator{regExp: /[0-9]+/}
+        validator: RegularExpressionValidator{regularExpression: /[0-9]+/}
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
     }
@@ -52,10 +51,9 @@ Item {
         height: 26
         placeholderText: "Confirm PIN"
         readOnly: false
-        textColor: "#000000"
         echoMode: TextInput.Password
         inputMethodHints: Qt.ImhDigitsOnly
-        validator: RegExpValidator{regExp: /[0-9]+/}
+        validator: RegularExpressionValidator{regularExpression: /[0-9]+/}
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: newPinField.bottom
         anchors.topMargin: 20

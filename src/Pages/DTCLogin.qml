@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import QtQuick.Controls 1.4
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 import "../Components"
 
 Item {
@@ -37,7 +37,6 @@ Item {
         height: 26
         readOnly: false
         placeholderText: "Username"
-        textColor: "#000000"
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 0
@@ -49,7 +48,6 @@ Item {
         height: 26
         placeholderText: "Key"
         readOnly: false
-        textColor: "#000000"
         echoMode: TextInput.Password
         anchors.top: dtcUsernameField.bottom
         anchors.topMargin: 20

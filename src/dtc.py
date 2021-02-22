@@ -1,4 +1,4 @@
-from PySide2.QtCore import QObject, Slot, Signal
+from PySide6.QtCore import QObject, Slot, Signal
 
 import requests
 import base58
@@ -20,7 +20,7 @@ class DTCLogin(QObject):
     @Slot(str, str)
     def auth(self, username, private_key):
         # TODO: Move API to settings page accessible from anywhere in app
-        avalon_account = requests.get('https://avalon.oneloved.tube/account/' + username)
+        avalon_account = requests.get('http://192.168.0.186:3003/account/' + username)
         if avalon_account.status_code != 200:
             self.loginResult.emit(2)
         try:

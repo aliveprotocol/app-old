@@ -1,5 +1,5 @@
 # Qt Libraries
-PySide2==5.15.0
+PySide6>=6.0.1
 
 # Avalon dependencies
 base58>=2.0.1

@@ -1,6 +1,6 @@
-import QtQuick 2.0
-import QtQuick.Dialogs 1.3
-import QtQuick.Controls 2.14
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import Qt.labs.platform 1.1
 import "../Components"
 
 Item {
@@ -216,7 +216,7 @@ Item {
                 anchors.top: dtcBurnLbl.bottom
                 anchors.topMargin: 10
                 selectByMouse: true
-                validator : RegExpValidator { regExp : /\d+(\.\d{1,2})?/ }
+                validator: RegularExpressionValidator { regularExpression: /\d+(\.\d{1,2})?/ }
             }
         }
     }
@@ -225,7 +225,7 @@ Item {
     FileDialog {
         id: fileDialog
         title: "Upload a thumbnail"
-        folder: shortcuts.home
+        // folder: shortcuts.home
         nameFilters: ["Image files (*.jpg *.png)"]
         onAccepted: {
             let selectedFSize = getFilesize.getFSize(fileDialog.fileUrl)

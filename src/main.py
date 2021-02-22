@@ -1,7 +1,7 @@
 # This Python file uses the following encoding: utf-8
 import sys
 import os
-from PySide2 import QtCore, QtGui, QtQml
+from PySide6 import QtCore, QtGui, QtQml
 from Helpers import fileHelper
 import dtc
 
