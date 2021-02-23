@@ -1,3 +1,25 @@
 {
-    "files": ["src/Pages/NewStream.qml","src/Components/ToastManager.qml","src/Pages/UserSettings.qml","src/Pages/Dashboard.qml","src/Pages/CreatePin.qml","src/Pages/RecentStreams.qml","src/Pages/AccountSettings.qml","src/Setup.qml","src/Pages/GoLive.qml","src/Components/BigButton.qml","src/Components/MediumButton.qml","src/Components/Toast.qml","src/Pages/DTCLogin.qml","src/main.py","src/MainUI.qml","src/Components/ColumnMenuButton.qml","src/Pages/Welcome.qml","src/main.qml","src/Components/ResourcesTopBar.qml"]
+    "files": [
+        "src/Pages/NewStream.qml",
+        "src/Pages/GoLive.qml",
+        "src/Pages/UserSettings.qml",
+        "src/Pages/Dashboard.qml",
+        "src/Pages/CreatePin.qml",
+        "src/Pages/RecentStreams.qml",
+        "src/Pages/AccountSettings.qml",
+        "src/Pages/NetworkSelect.qml",
+        "src/Pages/DTCLogin.qml",
+        "src/Pages/Welcome.qml",
+        "src/main.qml",
+        "src/MainUI.qml",
+        "src/Setup.qml",
+        "src/Components/ColumnMenuButton.qml",
+        "src/Components/BigButton.qml",
+        "src/Components/RoundedBtn.qml",
+        "src/Components/MediumButton.qml",
+        "src/Components/Toast.qml",
+        "src/Components/ToastManager.qml",
+        "src/Components/ResourcesTopBar.qml",
+        "src/main.py"
+    ]
 }

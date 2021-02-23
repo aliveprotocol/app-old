@@ -1,6 +1,6 @@
 # Alive
 
-A Qt Quick desktop app for decentralized live streaming on DTube chain.
+A Qt Quick desktop app for decentralized live streaming on Hive and Avalon.
 
 #### Build
 

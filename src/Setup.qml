@@ -16,7 +16,19 @@ Item {
         id: welcomePage
         getStartedMouseArea.onClicked: {
             // Get started button mouseArea.onClicked()
+            stack.push(networkSelectAvalon)
+        }
+    }
+
+    NetworkSelect {
+        id: networkSelectAvalon
+        visible: false
+        networkSelectAvalonMouseArea.onClicked: {
+            // Avalon login selected
             stack.push(dtcLoginPage)
+        }
+        networkSelectHiveMouseArea.onClicked: {
+            // Hive login selected
         }
     }
 
