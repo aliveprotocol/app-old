@@ -3,13 +3,13 @@ import QtQuick.Controls 2.15
 import "../Components"
 
 Item {
-    property alias backBtnMouseArea: dtcLoginBackBtn.btnMouseArea
+    property alias backBtnMouseArea: hiveLoginBackBtn.btnMouseArea
     property alias proceedLoginBtnMouseArea: proceedLoginBtn.btnMouseArea
-    property alias dtcUsername: dtcUsernameField.text
-    property alias dtcKey: dtcKeyField.text
+    property alias hiveUsername: hiveUsernameField.text
+    property alias hiveKey: hiveKeyField.text
 
     RoundedBtn {
-        id: dtcLoginBackBtn
+        id: hiveLoginBackBtn
         btnLabel: qsTr("<< Back")
         anchors.top: parent.top
         anchors.left: parent.left
@@ -18,22 +18,22 @@ Item {
     }
 
     Text {
-        id: dtcLoginTitle
+        id: hiveLoginTitle
         color: "#ffffff"
-        text: qsTr("Avalon Login")
-        anchors.bottom: dtcLoginDescription.top
+        text: qsTr("Hive Login")
+        anchors.bottom: hiveLoginDescription.top
         anchors.bottomMargin: 30
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: 50
     }
 
     Text {
-        id: dtcLoginDescription
+        id: hiveLoginDescription
         width: 736
         height: 48
         color: "#ffffff"
-        text: qsTr("Log in using your Avalon username and private key. Custom keys must have COMMENT, PUSH_STREAM and END_STREAM permissions.")
-        anchors.bottom: dtcUsernameField.top
+        text: qsTr("Log in using your Hive username and posting key.")
+        anchors.bottom: hiveUsernameField.top
         anchors.bottomMargin: 70
         anchors.horizontalCenter: parent.horizontalCenter
         horizontalAlignment: Text.AlignHCenter
@@ -42,7 +42,7 @@ Item {
     }
 
     TextField {
-        id: dtcUsernameField
+        id: hiveUsernameField
         width: 347
         height: 26
         readOnly: false
@@ -53,13 +53,13 @@ Item {
     }
 
     TextField {
-        id: dtcKeyField
+        id: hiveKeyField
         width: 347
         height: 26
-        placeholderText: "Key"
+        placeholderText: "Posting Key"
         readOnly: false
         echoMode: TextInput.Password
-        anchors.top: dtcUsernameField.bottom
+        anchors.top: hiveUsernameField.bottom
         anchors.topMargin: 20
         anchors.horizontalCenter: parent.horizontalCenter
     }
@@ -67,7 +67,7 @@ Item {
     BigButton {
         id: proceedLoginBtn
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: dtcKeyField.bottom
+        anchors.top: hiveKeyField.bottom
         anchors.topMargin: 40
         btnLabel: qsTr("Login")
     }
@@ -75,7 +75,7 @@ Item {
     Text {
         id: element
         color: "#ffffff"
-        text: qsTr("No account? Get one at signup.d.tube.")
+        text: qsTr("No account? Get one at signup.hive.io.")
         anchors.top: proceedLoginBtn.bottom
         anchors.topMargin: 60
         anchors.horizontalCenter: parent.horizontalCenter

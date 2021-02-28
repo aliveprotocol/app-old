@@ -9,6 +9,7 @@
         "src/Pages/AccountSettings.qml",
         "src/Pages/NetworkSelect.qml",
         "src/Pages/DTCLogin.qml",
+        "src/Pages/HiveLogin.qml",
         "src/Pages/Welcome.qml",
         "src/main.qml",
         "src/MainUI.qml",

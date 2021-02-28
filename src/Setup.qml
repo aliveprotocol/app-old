@@ -23,13 +23,8 @@ Item {
     NetworkSelect {
         id: networkSelectAvalon
         visible: false
-        networkSelectAvalonMouseArea.onClicked: {
-            // Avalon login selected
-            stack.push(dtcLoginPage)
-        }
-        networkSelectHiveMouseArea.onClicked: {
-            // Hive login selected
-        }
+        networkSelectAvalonMouseArea.onClicked: stack.push(dtcLoginPage)
+        networkSelectHiveMouseArea.onClicked: stack.push(hiveLoginPage)
         networkSelectBackMouseArea.onClicked: stack.pop()
     }
 
@@ -64,6 +59,12 @@ Item {
                 }
             }
         }
+    }
+
+    HiveLogin {
+        id: hiveLoginPage
+        visible: false
+        backBtnMouseArea.onClicked: stack.pop()
     }
 
     CreatePin {
