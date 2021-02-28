@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import QtQuick.Window 2.14
+import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import "./Pages"
 import "./Components"
@@ -36,7 +36,7 @@ Item {
 
         Connections {
             target: dtcLoginBridge
-            function onLoginResult(result) {
+            function onAvalonLoginResult(result) {
                 switch (result) {
                 case 0:
                     toast.show("Logged in with custom key successfully",3000,1)
@@ -65,6 +65,28 @@ Item {
         id: hiveLoginPage
         visible: false
         backBtnMouseArea.onClicked: stack.pop()
+        proceedLoginBtnMouseArea.onClicked: hiveLoginBridge.startSignal(hiveLoginPage.hiveUsername, hiveLoginPage.hiveKey)
+
+        Connections {
+            target: hiveLoginBridge
+            function onHiveLoginResult(result) {
+                switch (result) {
+                case 0:
+                    toast.show("Logged in with posting key successfully",3000,1)
+                    credInstance.add_credential('hive',hiveLoginPage.hiveUsername, hiveLoginPage.hiveKey)
+                    stack.push(createPinPage)
+                    break
+                case 1:
+                    toast.show("Could not obtain account info",3000,3)
+                    break
+                case 2:
+                    toast.show("Username does not exist",3000,3)
+                    break
+                case 3:
+                    toast.show("Invalid posting key",3000,3)
+                }
+            }
+        }
     }
 
     CreatePin {

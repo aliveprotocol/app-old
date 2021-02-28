@@ -4,3 +4,6 @@ PySide6>=6.0.1
 # Avalon dependencies
 base58>=2.0.1
 secp256k1
+
+# Hive dependencies
+beem>=0.24.20

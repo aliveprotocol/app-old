@@ -4,6 +4,7 @@ import os
 from PySide6 import QtCore, QtGui, QtQml
 from Helpers import fileHelper
 import dtc
+import hive
 import credentials
 
 def handle_exit():
@@ -27,6 +28,11 @@ if __name__ == "__main__":
     dtcGetAcc.moveToThread(workerThread)
     dtcGetAccBridge = dtc.GetAccountBridge(dtcGetAcc)
     engine.rootContext().setContextProperty("dtcGetAccBridge", dtcGetAccBridge)
+
+    hiveLogin = hive.HiveLogin()
+    hiveLogin.moveToThread(workerThread)
+    hiveLoginBridge = hive.HiveLoginBridge(hiveLogin)
+    engine.rootContext().setContextProperty("hiveLoginBridge", hiveLoginBridge)
 
     getFilesize = fileHelper.GetFilesize()
     engine.rootContext().setContextProperty("getFilesize", getFilesize)
