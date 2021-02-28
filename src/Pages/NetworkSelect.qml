@@ -3,6 +3,7 @@ import "../Components"
 
 Item {
     id: element
+    property alias networkSelectBackMouseArea: networkSelectBackBtn.btnMouseArea
     property alias networkSelectAvalonMouseArea: networkSelectAvalon.btnMouseArea
     property alias networkSelectHiveMouseArea: networkSelectHive.btnMouseArea
 

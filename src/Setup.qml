@@ -30,11 +30,13 @@ Item {
         networkSelectHiveMouseArea.onClicked: {
             // Hive login selected
         }
+        networkSelectBackMouseArea.onClicked: stack.pop()
     }
 
     DTCLogin {
         id: dtcLoginPage
         visible: false
+        backBtnMouseArea.onClicked: stack.pop()
         proceedLoginBtnMouseArea.onClicked: dtcLoginBridge.startSignal(dtcLoginPage.dtcUsername, dtcLoginPage.dtcKey)
 
         Connections {

@@ -3,9 +3,19 @@ import QtQuick.Controls 2.15
 import "../Components"
 
 Item {
+    property alias backBtnMouseArea: dtcLoginBackBtn.btnMouseArea
     property alias proceedLoginBtnMouseArea: proceedLoginBtn.btnMouseArea
     property alias dtcUsername: dtcUsernameField.text
     property alias dtcKey: dtcKeyField.text
+
+    RoundedBtn {
+        id: dtcLoginBackBtn
+        btnLabel: qsTr("<< Back")
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.topMargin: 25
+        anchors.leftMargin: 25
+    }
 
     Text {
         id: dtcLoginTitle
