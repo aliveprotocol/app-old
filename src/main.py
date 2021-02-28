@@ -4,6 +4,7 @@ import os
 from PySide6 import QtCore, QtGui, QtQml
 from Helpers import fileHelper
 import dtc
+import credentials
 
 def handle_exit():
     workerThread.quit()
@@ -29,6 +30,9 @@ if __name__ == "__main__":
 
     getFilesize = fileHelper.GetFilesize()
     engine.rootContext().setContextProperty("getFilesize", getFilesize)
+
+    creds = credentials.CredentialsInstance()
+    engine.rootContext().setContextProperty("credInstance", creds)
 
     # Load QML files
     engine.load(os.path.join(os.path.dirname(__file__), "main.qml"))

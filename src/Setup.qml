@@ -45,10 +45,12 @@ Item {
                 switch (result) {
                 case 0:
                     toast.show("Logged in with custom key successfully",3000,1)
+                    credInstance.add_credential('dtc',dtcLoginPage.dtcUsername, dtcLoginPage.dtcKey)
                     stack.push(createPinPage)
                     break
                 case 1:
                     toast.show("Logged in with master key successfully",3000,1)
+                    credInstance.add_credential('dtc',dtcLoginPage.dtcUsername, dtcLoginPage.dtcKey)
                     stack.push(createPinPage)
                     break
                 case 2:
