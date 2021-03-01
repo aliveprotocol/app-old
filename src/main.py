@@ -34,6 +34,13 @@ if __name__ == "__main__":
     hiveLoginBridge = hive.HiveLoginBridge(hiveLogin)
     engine.rootContext().setContextProperty("hiveLoginBridge", hiveLoginBridge)
 
+    hiveAcc = hive.HiveAccount()
+    hiveAcc.moveToThread(workerThread)
+    hivePowerBridge = hive.HivePowerBridge(hiveAcc)
+    hiveGetRcBridge = hive.HiveRcBridge(hiveAcc)
+    engine.rootContext().setContextProperty("hivePowerBridge", hivePowerBridge)
+    engine.rootContext().setContextProperty("hiveGetRcBridge", hiveGetRcBridge)
+
     getFilesize = fileHelper.GetFilesize()
     engine.rootContext().setContextProperty("getFilesize", getFilesize)
 

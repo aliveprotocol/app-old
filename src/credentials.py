@@ -23,6 +23,10 @@ class CredentialsInstance(QtCore.QObject):
             return False
         elif network == 'dtc' and self.is_dtc:
             return False
+        if network == 'hive':
+            self.is_hive = True
+        elif network == 'dtc':
+            self.is_dtc = True
         new_cred = Credential(network,username,key)
         self.current_credentials.append(new_cred)
         return True
@@ -48,3 +52,11 @@ class CredentialsInstance(QtCore.QObject):
             return ''
         else:
             return self.current_credentials[idx].private_key
+
+    @QtCore.Slot(result=str)
+    def get_preferred_network(self):
+        if self.is_hive:
+            return 'hive'
+        elif self.is_dtc:
+            return 'dtc'
+        return ''

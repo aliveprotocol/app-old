@@ -44,21 +44,21 @@ class DTCLogin(QtCore.QObject):
 
 class GetAccountBridge(QtCore.QObject):
     startSignal = QtCore.Signal(str)
-    accountResult = QtCore.Signal(str, arguments=['result'])
+    avalonAccResult = QtCore.Signal(str, arguments=['result'])
 
     def __init__(self, obj, parent=None):
         super().__init__(parent)
         self.m_obj = obj
-        self.m_obj.accountResult.connect(self.accountResult)
+        self.m_obj.avalonAccResult.connect(self.avalonAccResult)
         self.startSignal.connect(self.m_obj.getAccount)
 
 class GetAccount(QtCore.QObject):
-    accountResult = QtCore.Signal(str)
+    avalonAccResult = QtCore.Signal(str)
 
     @QtCore.Slot(str)
     def getAccount(self,username):
-        account = requests.get('https://avalon.oneloved.tube/account/' + username)
+        account = requests.get('http://192.168.0.186:3003/account/' + username)
         if account.status_code != 200:
-            self.accountResult.emit("Error")
+            self.avalonAccResult.emit("Error")
         else:
-            self.accountResult.emit(account.text)
+            self.avalonAccResult.emit(account.text)
