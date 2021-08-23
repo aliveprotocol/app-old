@@ -41,12 +41,16 @@ Item {
                 case 0:
                     toast.show("Logged in with custom key successfully",3000,1)
                     credInstance.add_credential('dtc',dtcLoginPage.dtcUsername, dtcLoginPage.dtcKey)
-                    stack.push(createPinPage)
+                    // stack.push(createPinPage)
+                    dtcLoginPage.visible = false
+                    callback()
                     break
                 case 1:
                     toast.show("Logged in with master key successfully",3000,1)
                     credInstance.add_credential('dtc',dtcLoginPage.dtcUsername, dtcLoginPage.dtcKey)
-                    stack.push(createPinPage)
+                    // stack.push(createPinPage)
+                    dtcLoginPage.visible = false
+                    callback()
                     break
                 case 2:
                     toast.show("Invalid username",3000,3)
@@ -74,7 +78,9 @@ Item {
                 case 0:
                     toast.show("Logged in with posting key successfully",3000,1)
                     credInstance.add_credential('hive',hiveLoginPage.hiveUsername, hiveLoginPage.hiveKey)
-                    stack.push(createPinPage)
+                    // stack.push(createPinPage)
+                    hiveLoginPage.visible = false
+                    callback()
                     break
                 case 1:
                     toast.show("Could not obtain account info",3000,3)
