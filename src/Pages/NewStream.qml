@@ -241,7 +241,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:1280;width:640}D{i:2;anchors_x:0;anchors_y:0}D{i:3;anchors_x:0;anchors_y:58}
-D{i:5;anchors_width:640;anchors_x:0;anchors_y:135}D{i:12;anchors_x:580}D{i:14;anchors_width:640;anchors_x:0;anchors_y:506}
+    D{i:0;autoSize:true;height:1280;width:640}
 }
 ##^##*/

@@ -12,6 +12,7 @@ def handle_exit():
 
 if __name__ == "__main__":
     app = QtGui.QGuiApplication(sys.argv)
+    app.setWindowIcon(QtGui.QIcon('alivelogo.png'))
     engine = QtQml.QQmlApplicationEngine()
 
     # Worker thread
