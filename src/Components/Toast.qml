@@ -66,7 +66,7 @@ Rectangle {
     color: {
         switch (type) {
         case 0:
-            return "#222222"
+            return "#00aeff"
         case 1:
             return "#33f707"
         case 2:
@@ -74,7 +74,7 @@ Rectangle {
         case 3:
             return "#f9553b"
         default:
-            return "#222222"
+            return "#fff000"
         }
     }
 

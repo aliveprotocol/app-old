@@ -6,8 +6,10 @@ import "../Components"
 Item {
     property var communitiesList: [{ value: 'hive-169420', text: 'Alive Protocol (hive-169420)' }]
     onVisibleChanged: {
-        let username = credInstance.get_username_by_network('hive')
-        hiveCommunitySubBridge.startSignal(username)
+        if (visible) {
+            let username = credInstance.get_username_by_network('hive')
+            hiveCommunitySubBridge.startSignal(username)
+        }
     }
 
     ScrollView {
@@ -117,6 +119,7 @@ Item {
 
             AliveTextField {
                 id: thumbnailDirField
+                placeholderText: qsTr("Thumbnail hash goes here")
                 height: 25
                 anchors.right: parent.right
                 anchors.rightMargin: 85
@@ -236,6 +239,28 @@ Item {
                 validator: RegularExpressionValidator { regularExpression: /\d+(\.\d{1,2})?/ }
             }
             */
+
+            BigButton {
+                id: proceedCreateStreamBtn
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: hiveCommunityDropdown.bottom
+                anchors.topMargin: 30
+                anchors.bottomMargin: 30
+                btnLabel: qsTr("Create")
+                btnMouseArea.onClicked: {
+                    // basic checks
+                    if (titleField.text === "")
+                        return toast.show(qsTr("Title is required"),3000,3)
+                    else if (tagsField.text === "")
+                        return toast.show(qsTr("Tags are required"),3000,3)
+                    else if (tagsField.text.split(' ').length > 8)
+                        return toast.show(qsTr("Please use only 8 tags maximum"),3000,3)
+                    else if (thumbnailDirField.text === "")
+                        return toast.show(qsTr("Please enter a thumbnail hash or upload one"),3000,3)
+
+                    toast.show('Create stream...',3000,0)
+                }
+            }
         }
     }
 
@@ -258,8 +283,11 @@ Item {
         target: hiveCommunitySubBridge
         function onHiveCommunitySubResult(result) {
             let r = JSON.parse(result)
-            if (r.result) for (let i in r.result) if (r.result[i][0] !== 'hive-169420')
-                communitiesList.push({ value: r.result[i][0], text: r.result[i][1] + ' (' + r.result[i][0] + ')' })
+            if (r.result) {
+                communitiesList = [{ value: 'hive-169420', text: 'Alive Protocol (hive-169420)' }]
+                for (let i in r.result) if (r.result[i][0] !== 'hive-169420')
+                    communitiesList.push({ value: r.result[i][0], text: r.result[i][1] + ' (' + r.result[i][0] + ')' })
+            }
             hiveCommunityDropdown.model = communitiesList
         }
     }
