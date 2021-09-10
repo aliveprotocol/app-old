@@ -61,9 +61,20 @@ class HiveRcBridge(QtCore.QObject):
         self.m_obj.hiveRcResult.connect(self.hiveRcResult)
         self.startSignal.connect(self.m_obj.getRC)
 
+class HiveCommunitySubBridge(QtCore.QObject):
+    startSignal = QtCore.Signal(str)
+    hiveCommunitySubResult = QtCore.Signal(str, arguments=['result'])
+
+    def __init__(self, obj, parent=None):
+        super().__init__(parent)
+        self.m_obj = obj
+        self.m_obj.hiveCommunitySubResult.connect(self.hiveCommunitySubResult)
+        self.startSignal.connect(self.m_obj.getCommunitySub)
+
 class HiveAccount(QtCore.QObject):
     hivePowerResult = QtCore.Signal(float)
     hiveRcResult = QtCore.Signal(str)
+    hiveCommunitySubResult = QtCore.Signal(str)
 
     @QtCore.Slot(str)
     def getHP(self,username):
@@ -102,3 +113,20 @@ class HiveAccount(QtCore.QObject):
             self.hiveRcResult.emit("Error")
         else:
             self.hiveRcResult.emit(rc.text)
+
+    @QtCore.Slot(str)
+    def getCommunitySub(self,username):
+        hive_communitysubreq = {
+            'jsonrpc': '2.0',
+            'id': 1,
+            'method': 'bridge.list_all_subscriptions',
+            'params': {
+                'account': username
+            }
+        }
+        subs = requests.post('https://techcoderx.com',json=hive_communitysubreq)
+        if subs.status_code != 200:
+            self.hiveCommunitySubResult.emit("Error")
+        else:
+            print(subs.text)
+            self.hiveCommunitySubResult.emit(subs.text)

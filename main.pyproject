@@ -18,6 +18,7 @@
         "src/Components/AliveTextField.qml",
         "src/Components/ColumnMenuButton.qml",
         "src/Components/BigButton.qml",
+        "src/Components/DropdownSelection.qml",
         "src/Components/RoundedBtn.qml",
         "src/Components/MediumButton.qml",
         "src/Components/Toast.qml",

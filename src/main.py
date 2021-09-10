@@ -8,7 +8,7 @@ import hive
 import credentials
 
 def handle_exit():
-    workerThread.quit()
+    workerThread.terminate()
 
 if __name__ == "__main__":
     app = QtGui.QGuiApplication(sys.argv)
@@ -39,8 +39,10 @@ if __name__ == "__main__":
     hiveAcc.moveToThread(workerThread)
     hivePowerBridge = hive.HivePowerBridge(hiveAcc)
     hiveGetRcBridge = hive.HiveRcBridge(hiveAcc)
+    hiveCommunitySubBridge = hive.HiveCommunitySubBridge(hiveAcc)
     engine.rootContext().setContextProperty("hivePowerBridge", hivePowerBridge)
     engine.rootContext().setContextProperty("hiveGetRcBridge", hiveGetRcBridge)
+    engine.rootContext().setContextProperty("hiveCommunitySubBridge", hiveCommunitySubBridge)
 
     getFilesize = fileHelper.GetFilesize()
     engine.rootContext().setContextProperty("getFilesize", getFilesize)

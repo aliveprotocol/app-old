@@ -4,6 +4,12 @@ import Qt.labs.platform 1.1
 import "../Components"
 
 Item {
+    property var communitiesList: [{ value: 'hive-169420', text: 'Alive Protocol (hive-169420)' }]
+    onVisibleChanged: {
+        let username = credInstance.get_username_by_network('hive')
+        hiveCommunitySubBridge.startSignal(username)
+    }
+
     ScrollView {
         id: scrollView
         clip: true
@@ -93,7 +99,7 @@ Item {
                 anchors.leftMargin: 0
                 anchors.top: tagsLbl.bottom
                 anchors.topMargin: 10
-                placeholderText: qsTr("Up to 7, separated by space")
+                placeholderText: qsTr("Up to 8, separated by space")
             }
 
             Text {
@@ -130,6 +136,31 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 btnMouseArea.onClicked: fileDialog.open()
+            }
+
+            Text {
+                id: hiveCommunityLbl
+                height: 22
+                color: '#ffffff'
+                text: qsTr('Hivemind community')
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.top: thumbnailDirField.bottom
+                anchors.topMargin: 20
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 18
+            }
+
+            DropdownSelection {
+                id: hiveCommunityDropdown
+                height: 25
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.top: hiveCommunityLbl.bottom
+                anchors.topMargin: 10
+                model: communitiesList
             }
 
             /*
@@ -220,6 +251,16 @@ Item {
                 thumbnailDirField.text = fileDialog.currentFile
             else
                 toast.show("Thumbnail file size must be under 4 MB",3000,3)
+        }
+    }
+
+    Connections {
+        target: hiveCommunitySubBridge
+        function onHiveCommunitySubResult(result) {
+            let r = JSON.parse(result)
+            if (r.result) for (let i in r.result) if (r.result[i][0] !== 'hive-169420')
+                communitiesList.push({ value: r.result[i][0], text: r.result[i][1] + ' (' + r.result[i][0] + ')' })
+            hiveCommunityDropdown.model = communitiesList
         }
     }
 }

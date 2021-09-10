@@ -73,7 +73,13 @@ Item {
     Text {
         id: element
         color: "#ffffff"
-        text: qsTr("No account? Get one at signup.hive.io.")
+        text: qsTr('
+            <html>
+                <head><style>a {color: #ffffff;} a:hovered {color: #ffffff;} a:visited {color: #ffffff;} a:active { color: #ffffff;}</style></head>
+                <body>No account? Get one at <a href="https://signup.hive.io">signup.hive.io</a>.</body>
+            </html>')
+        textFormat: Text.RichText
+        onLinkActivated: (l) => Qt.openUrlExternally(l)
         anchors.top: proceedLoginBtn.bottom
         anchors.topMargin: 60
         anchors.horizontalCenter: parent.horizontalCenter
