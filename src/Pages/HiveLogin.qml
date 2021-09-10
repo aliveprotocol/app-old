@@ -41,23 +41,21 @@ Item {
         font.pixelSize: 18
     }
 
-    TextField {
+    AliveTextField {
         id: hiveUsernameField
         width: 347
         height: 26
-        readOnly: false
         placeholderText: "Username"
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 0
     }
 
-    TextField {
+    AliveTextField {
         id: hiveKeyField
         width: 347
         height: 26
         placeholderText: "Posting Key"
-        readOnly: false
         echoMode: TextInput.Password
         anchors.top: hiveUsernameField.bottom
         anchors.topMargin: 20

@@ -21,7 +21,7 @@ Item {
                 topMargin: 0
             }
             color: "#36393f"
-            implicitHeight: 700
+            // implicitHeight: 700
 
             Text {
                 id: titleLbl
@@ -36,16 +36,15 @@ Item {
                 font.pixelSize: 18
             }
 
-            TextField {
+            AliveTextField {
                 id: titleField
-                height: 30
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.top: titleLbl.bottom
                 anchors.topMargin: 10
-                selectByMouse: true
+                height: 25
             }
 
             Text {
@@ -61,7 +60,7 @@ Item {
                 font.pixelSize: 18
             }
 
-            Rectangle {
+            AliveScrollableTextArea {
                 id: descriptionItm
                 height: 100
                 anchors.right: parent.right
@@ -70,17 +69,6 @@ Item {
                 anchors.leftMargin: 0
                 anchors.top: descriptionLbl.bottom
                 anchors.topMargin: 10
-                color: "#ffffff"
-
-                ScrollView {
-                    id: descriptionScrollView
-                    anchors.fill: parent
-
-                    TextArea {
-                        id: descriptionTextArea
-                        selectByMouse: true
-                    }
-                }
             }
 
             Text {
@@ -96,9 +84,9 @@ Item {
                 font.pixelSize: 18
             }
 
-            TextField {
+            AliveTextField {
                 id: tagsField
-                height: 30
+                height: 25
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.left: parent.left
@@ -106,7 +94,6 @@ Item {
                 anchors.top: tagsLbl.bottom
                 anchors.topMargin: 10
                 placeholderText: qsTr("Up to 7, separated by space")
-                selectByMouse: true
             }
 
             Text {
@@ -122,22 +109,21 @@ Item {
                 font.pixelSize: 18
             }
 
-            TextField {
+            AliveTextField {
                 id: thumbnailDirField
-                height: 30
+                height: 25
                 anchors.right: parent.right
                 anchors.rightMargin: 85
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.top: selectThumbnailLbl.bottom
                 anchors.topMargin: 10
-                selectByMouse: true
             }
 
             MediumButton {
                 id: thumbnailDirSelectBtn
                 anchors.top: selectThumbnailLbl.bottom
-                anchors.topMargin: 10
+                anchors.topMargin: 7.5
                 btnLabel: "Browse"
                 anchors.left: thumbnailDirField.right
                 anchors.leftMargin: 5
@@ -146,6 +132,7 @@ Item {
                 btnMouseArea.onClicked: fileDialog.open()
             }
 
+            /*
             Text {
                 id: dtcVwLbl
                 height: 22
@@ -206,18 +193,18 @@ Item {
                 font.pixelSize: 18
             }
 
-            TextField {
+            AliveTextField {
                 id: dtcBurnField
-                height: 30
+                height: 25
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.top: dtcBurnLbl.bottom
                 anchors.topMargin: 10
-                selectByMouse: true
                 validator: RegularExpressionValidator { regularExpression: /\d+(\.\d{1,2})?/ }
             }
+            */
         }
     }
 
@@ -228,9 +215,9 @@ Item {
         // folder: shortcuts.home
         nameFilters: ["Image files (*.jpg *.png)"]
         onAccepted: {
-            let selectedFSize = getFilesize.getFSize(fileDialog.fileUrl)
+            let selectedFSize = getFilesize.getFSize(fileDialog.currentFile)
             if (selectedFSize > 0 && selectedFSize <= 4194304) // 4 MB limit
-                thumbnailDirField.text = fileDialog.fileUrl
+                thumbnailDirField.text = fileDialog.currentFile
             else
                 toast.show("Thumbnail file size must be under 4 MB",3000,3)
         }
