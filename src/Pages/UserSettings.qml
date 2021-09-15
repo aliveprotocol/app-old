@@ -79,7 +79,7 @@ Item {
                 btnMouseArea.onClicked: {
                     userSettingsInstance.set("devMode",boolToStr(devModeSwitch.checked))
                     userSettingsInstance.write()
-                    toast.show(qsTr("Saved successfully: " + boolToStr(devModeSwitch.checked)),3000,0)
+                    toast.show(qsTr("Saved successfully"),3000,0)
                 }
             }
         }
