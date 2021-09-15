@@ -128,5 +128,4 @@ class HiveAccount(QtCore.QObject):
         if subs.status_code != 200:
             self.hiveCommunitySubResult.emit("Error")
         else:
-            print(subs.text)
             self.hiveCommunitySubResult.emit(subs.text)

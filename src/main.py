@@ -6,6 +6,7 @@ from Helpers import fileHelper
 import dtc
 import hive
 import credentials
+import settings
 
 def handle_exit():
     workerThread.terminate()
@@ -49,6 +50,9 @@ if __name__ == "__main__":
 
     creds = credentials.CredentialsInstance()
     engine.rootContext().setContextProperty("credInstance", creds)
+
+    userSettings = settings.UserSettingsInstance()
+    engine.rootContext().setContextProperty("userSettingsInstance", userSettings)
 
     # Load QML files
     engine.load(os.path.join(os.path.dirname(__file__), "main.qml"))
