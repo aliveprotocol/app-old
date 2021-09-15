@@ -1,3 +1,5 @@
+import os
+import json
 from dataclasses import dataclass
 from PySide6 import QtCore
 
@@ -12,10 +14,47 @@ class Credential:
         assert self.username, 'no username?'
         assert self.private_key, 'no key?'
 
+    def to_object(self) -> dict:
+        return {
+            'network': self.network,
+            'username': self.username,
+            'private_key': self.private_key
+        }
+
 class CredentialsInstance(QtCore.QObject):
     current_credentials: list = []
     is_hive: bool = False
     is_dtc: bool = False
+    data_dir = os.path.expanduser(os.path.join('~', '.alive'))
+
+    def __init__(self):
+        super().__init__()
+        self.load_credentials()
+
+    def load_credentials(self):
+        if os.path.exists(self.data_dir+'/credentials.json'):
+            # Read file
+            f = open(self.data_dir+'/credentials.json','r')
+            r = json.loads(f.read())
+            for c in r:
+                self.add_credential(c['network'],c['username'],c['private_key'])
+            f.close()
+
+            # Update networks
+            for c in range(len(self.current_credentials)):
+                if self.current_credentials[c].network == 'hive':
+                    self.is_hive = True
+                elif self.current_credentials[c].network == 'dtc':
+                    self.is_dtc = True
+
+    @QtCore.Slot()
+    def write_credentials(self):
+        f = open(self.data_dir+'/credentials.json','w')
+        w = []
+        for c in self.current_credentials:
+            w.append(c.to_object())
+        f.write(json.dumps(w))
+        f.close()
 
     @QtCore.Slot(str, str, str, result=bool)
     def add_credential(self,network,username,key):
@@ -60,3 +99,7 @@ class CredentialsInstance(QtCore.QObject):
         elif self.is_dtc:
             return 'dtc'
         return ''
+
+    @QtCore.Slot(result=bool)
+    def contains_credential(self):
+        return self.is_hive or self.is_dtc

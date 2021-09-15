@@ -7,6 +7,7 @@ Item {
     property alias proceedLoginBtnMouseArea: proceedLoginBtn.btnMouseArea
     property alias hiveUsername: hiveUsernameField.text
     property alias hiveKey: hiveKeyField.text
+    property alias remembermeChecked: remembermeSwitch.checked
 
     RoundedBtn {
         id: hiveLoginBackBtn
@@ -34,7 +35,7 @@ Item {
         color: "#ffffff"
         text: qsTr("Log in using your Hive username and posting key.")
         anchors.bottom: hiveUsernameField.top
-        anchors.bottomMargin: 70
+        anchors.bottomMargin: 50
         anchors.horizontalCenter: parent.horizontalCenter
         horizontalAlignment: Text.AlignHCenter
         wrapMode: Text.WordWrap
@@ -46,9 +47,9 @@ Item {
         width: 347
         height: 26
         placeholderText: "Username"
-        anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: 0
+        anchors.bottom: hiveKeyField.top
+        anchors.bottomMargin: 20
     }
 
     AliveTextField {
@@ -57,15 +58,52 @@ Item {
         height: 26
         placeholderText: "Posting Key"
         echoMode: TextInput.Password
-        anchors.top: hiveUsernameField.bottom
-        anchors.topMargin: 20
+        anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 0
+    }
+
+    Switch {
+        id: remembermeSwitch
+        text: qsTr("Remember Me")
+        anchors.top: hiveKeyField.bottom
+        anchors.topMargin: 25
+        anchors.horizontalCenter: parent.horizontalCenter
+        checked: true
+
+        indicator: Rectangle {
+            implicitWidth: 48
+            implicitHeight: 26
+            x: remembermeSwitch.leftPadding
+            y: parent.height / 2 - height / 2
+            radius: 13
+            color: remembermeSwitch.checked ? "#ff5555" : "#ffffff"
+            border.color: remembermeSwitch.checked ? "#ff5555" : "#cccccc"
+
+            Rectangle {
+                x: remembermeSwitch.checked ? parent.width - width : 0
+                width: 26
+                height: 26
+                radius: 13
+                color: remembermeSwitch.down ? "#cccccc" : "#ffffff"
+                border.color: remembermeSwitch.checked ? (remembermeSwitch.down ? "#ff5555" : "#ff4444") : "#999999"
+            }
+        }
+
+        contentItem: Text {
+            text: remembermeSwitch.text
+            font: remembermeSwitch.font
+            opacity: enabled ? 1.0 : 0.3
+            color: "#ffffff"
+            verticalAlignment: Text.AlignVCenter
+            leftPadding: remembermeSwitch.indicator.width + remembermeSwitch.spacing
+        }
     }
 
     BigButton {
         id: proceedLoginBtn
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: hiveKeyField.bottom
+        anchors.top: remembermeSwitch.bottom
         anchors.topMargin: 40
         btnLabel: qsTr("Login")
     }

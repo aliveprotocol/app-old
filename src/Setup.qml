@@ -16,7 +16,13 @@ Item {
         id: welcomePage
         getStartedMouseArea.onClicked: {
             // Get started button mouseArea.onClicked()
-            stack.push(networkSelectAvalon)
+            // saved credentials (if any) should be loaded at app launch
+           if (credInstance.contains_credential()) {
+               toast.show(qsTr("Persistent login loaded"),3000,0)
+               visible = false
+               callback()
+           } else
+               stack.push(networkSelectAvalon)
         }
     }
 
@@ -78,6 +84,8 @@ Item {
                 case 0:
                     toast.show("Logged in with posting key successfully",3000,1)
                     credInstance.add_credential('hive',hiveLoginPage.hiveUsername, hiveLoginPage.hiveKey)
+                    if (hiveLoginPage.remembermeChecked)
+                        credInstance.write_credentials()
                     // stack.push(createPinPage)
                     hiveLoginPage.visible = false
                     callback()
