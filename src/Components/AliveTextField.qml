@@ -6,6 +6,8 @@ TextField {
     selectByMouse: true
     background: textFieldBackground
     font.pixelSize: 14
+    placeholderTextColor: '#8e8e8e'
+    color: '#ffffff'
     onFocusChanged: {
         if (textField.focus)
             textFieldBackground.border.color = '#ff5555'
