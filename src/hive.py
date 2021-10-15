@@ -2,6 +2,7 @@ from PySide6 import QtCore
 from beem import Hive
 from beemgraphenebase import account
 import requests
+from settings import UserSettingsInstance
 
 class HiveLoginBridge(QtCore.QObject):
     startSignal = QtCore.Signal(str, str)
@@ -16,6 +17,11 @@ class HiveLoginBridge(QtCore.QObject):
 class HiveLogin(QtCore.QObject):
     hiveLoginResult = QtCore.Signal(int)
 
+    def __init__(self, settingsInstance: UserSettingsInstance) -> None:
+        super().__init__()
+        self.settingsInstance = settingsInstance
+
+
     @QtCore.Slot(str, str)
     def auth(self, username, private_key):
         try:
@@ -29,7 +35,7 @@ class HiveLogin(QtCore.QObject):
             'params': [[username]]
         }
         # support posting authorities from other accounts?
-        hive_accresp = requests.post("https://techcoderx.com",json=hive_accreq)
+        hive_accresp = requests.post(self.settingsInstance.get('hiveAPI'),json=hive_accreq)
         if hive_accresp.status_code != 200:
             return self.hiveLoginResult.emit(1)
         hive_accresult = hive_accresp.json()['result']
@@ -76,6 +82,10 @@ class HiveAccount(QtCore.QObject):
     hiveRcResult = QtCore.Signal(str)
     hiveCommunitySubResult = QtCore.Signal(str)
 
+    def __init__(self, settingsInstance: UserSettingsInstance) -> None:
+        super().__init__()
+        self.settingsInstance = settingsInstance
+
     @QtCore.Slot(str)
     def getHP(self,username):
         hive_accreq = {
@@ -90,8 +100,8 @@ class HiveAccount(QtCore.QObject):
             'method': 'condenser_api.get_dynamic_global_properties',
             'params': []
         }
-        account = requests.post('https://techcoderx.com',json=hive_accreq)
-        props = requests.post('https://techcoderx.com',json=hive_propsreq)
+        account = requests.post(self.settingsInstance.get('hiveAPI'),json=hive_accreq)
+        props = requests.post(self.settingsInstance.get('hiveAPI'),json=hive_propsreq)
         if account.status_code != 200:
             return self.hivePowerResult.emit("Error")
         elif props.status_code != 200:
@@ -108,7 +118,7 @@ class HiveAccount(QtCore.QObject):
                 'accounts': [username]
             }
         }
-        rc = requests.post('https://techcoderx.com',json=hive_rcreq)
+        rc = requests.post(self.settingsInstance.get('hiveAPI'),json=hive_rcreq)
         if rc.status_code != 200:
             self.hiveRcResult.emit("Error")
         else:
@@ -124,7 +134,7 @@ class HiveAccount(QtCore.QObject):
                 'account': username
             }
         }
-        subs = requests.post('https://techcoderx.com',json=hive_communitysubreq)
+        subs = requests.post(self.settingsInstance.get('hiveAPI'),json=hive_communitysubreq)
         if subs.status_code != 200:
             self.hiveCommunitySubResult.emit("Error")
         else:

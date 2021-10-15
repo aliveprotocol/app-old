@@ -5,6 +5,10 @@ import os
 class UserSettingsInstance(QtCore.QObject):
     user_settings = {}
     data_dir = os.path.expanduser(os.path.join('~', '.alive'))
+    defaults = {
+        'devMode': 'off',
+        'hiveAPI': 'https://techcoderx.com'
+    }
 
     def __init__(self) -> None:
         """User settings JSON constructor"""
@@ -23,7 +27,11 @@ class UserSettingsInstance(QtCore.QObject):
             r = self.user_settings[key]
             return r
         except KeyError:
-            return None
+            try:
+                d = self.defaults[key]
+                return d
+            except KeyError:
+                return None
     
     @QtCore.Slot(str, str, result=bool)
     def set(self,key,value):

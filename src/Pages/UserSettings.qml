@@ -10,9 +10,14 @@ Item {
         contentHeight: userSettingsRect.height
         onVisibleChanged: {
             if (visible) {
-                let settingsJson = JSON.parse(userSettingsInstance.readJson())
+                let settingsJson = {}
+                try {
+                    settingsJson = JSON.parse(userSettingsInstance.readJson())
+                } catch (e) {}
                 if (settingsJson.devMode && strToBool(settingsJson.devMode))
                     devModeSwitch.checked = true
+                if (settingsJson.hiveAPI)
+                    hiveAPINodeDropdown.currentIndex = hiveAPIObj.getIndex(settingsJson.hiveAPI)
             }
         }
 
@@ -28,6 +33,7 @@ Item {
             }
             color: "#36393f"
 
+            // Developer mode
             Text {
                 id: devModeLbl
                 height: 22
@@ -44,10 +50,8 @@ Item {
             Switch {
                 id: devModeSwitch
                 anchors.leftMargin: 20
-                anchors.topMargin: -7
                 anchors.left: devModeLbl.right
-                anchors.top: devModeLbl.top
-
+                anchors.verticalCenter: devModeLbl.verticalCenter
 
                 indicator: Rectangle {
                     implicitWidth: 48
@@ -69,15 +73,45 @@ Item {
                 }
             }
 
+            // Hive API node
+            Text {
+                id: hiveAPINodeLbl
+                height: 22
+                color: "#ffffff"
+                text: qsTr("Hive API node")
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.top: devModeLbl.bottom
+                anchors.topMargin: 20
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 18
+            }
+
+            HiveAPI {
+                id: hiveAPIObj
+            }
+
+            DropdownSelection {
+                id: hiveAPINodeDropdown
+                height: 25
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.left: hiveAPINodeLbl.right
+                anchors.leftMargin: 15
+                anchors.verticalCenter: hiveAPINodeLbl.verticalCenter
+                model: hiveAPIObj.apiOptions
+            }
+
             BigButton {
                 id: settingsSaveBtn
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: devModeLbl.bottom
+                anchors.top: hiveAPINodeLbl.bottom
                 anchors.topMargin: 30
                 anchors.bottomMargin: 30
                 btnLabel: qsTr("Save")
                 btnMouseArea.onClicked: {
                     userSettingsInstance.set("devMode",boolToStr(devModeSwitch.checked))
+                    userSettingsInstance.set("hiveAPI",hiveAPINodeDropdown.model[hiveAPINodeDropdown.currentIndex].value)
                     userSettingsInstance.write()
                     toast.show(qsTr("Saved successfully"),3000,0)
                 }

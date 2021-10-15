@@ -46,7 +46,7 @@ ComboBox {
     }
 
     contentItem: Text {
-        leftPadding: 0
+        leftPadding: 5
         rightPadding: comboBox.indicator.width + comboBox.spacing
 
         text: comboBox.displayText

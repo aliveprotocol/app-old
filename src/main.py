@@ -8,12 +8,14 @@ import hive
 import credentials
 import settings
 
+workerThread = None
+
 def handle_exit():
-    workerThread.terminate()
+    workerThread.quit()
 
 if __name__ == "__main__":
     app = QtGui.QGuiApplication(sys.argv)
-    app.setWindowIcon(QtGui.QIcon('alivelogo.png'))
+    app.setWindowIcon(QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + '/../alivelogo.png'))
     engine = QtQml.QQmlApplicationEngine()
 
     # Worker thread
@@ -21,6 +23,10 @@ if __name__ == "__main__":
     workerThread.start()
 
     # Signal slots
+    # User settings should come first
+    userSettings = settings.UserSettingsInstance()
+    engine.rootContext().setContextProperty("userSettingsInstance", userSettings)
+
     dtcLogin = dtc.DTCLogin()
     dtcLogin.moveToThread(workerThread)
     dtcLoginBridge = dtc.DTCLoginBridge(dtcLogin)
@@ -31,12 +37,12 @@ if __name__ == "__main__":
     dtcGetAccBridge = dtc.GetAccountBridge(dtcGetAcc)
     engine.rootContext().setContextProperty("dtcGetAccBridge", dtcGetAccBridge)
 
-    hiveLogin = hive.HiveLogin()
+    hiveLogin = hive.HiveLogin(userSettings)
     hiveLogin.moveToThread(workerThread)
     hiveLoginBridge = hive.HiveLoginBridge(hiveLogin)
     engine.rootContext().setContextProperty("hiveLoginBridge", hiveLoginBridge)
 
-    hiveAcc = hive.HiveAccount()
+    hiveAcc = hive.HiveAccount(userSettings)
     hiveAcc.moveToThread(workerThread)
     hivePowerBridge = hive.HivePowerBridge(hiveAcc)
     hiveGetRcBridge = hive.HiveRcBridge(hiveAcc)
@@ -50,9 +56,6 @@ if __name__ == "__main__":
 
     creds = credentials.CredentialsInstance()
     engine.rootContext().setContextProperty("credInstance", creds)
-
-    userSettings = settings.UserSettingsInstance()
-    engine.rootContext().setContextProperty("userSettingsInstance", userSettings)
 
     # Load QML files
     engine.load(os.path.join(os.path.dirname(__file__), "main.qml"))
