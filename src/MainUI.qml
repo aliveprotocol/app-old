@@ -7,6 +7,7 @@ import "./Pages"
 Item {
     id: mainUI
     property var toast
+    property var logoutCallback
     property int tabIndex: 0
 
     anchors.fill: parent

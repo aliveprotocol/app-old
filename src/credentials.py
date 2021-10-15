@@ -70,6 +70,25 @@ class CredentialsInstance(QtCore.QObject):
         self.current_credentials.append(new_cred)
         return True
 
+    @QtCore.Slot(str, result=bool)
+    def remove_credential(self,network):
+        if network == 'hive':
+            if self.is_hive is False:
+                return False
+            self.is_hive = False
+        elif network == 'dtc':
+            if self.is_dtc is False:
+                return False
+            self.is_dtc = False
+        return self.__pop_credential_by_index__(network)
+
+    def __pop_credential_by_index__(self, network: str) -> bool:
+        for i in range(len(self.current_credentials)):
+            if self.current_credentials[i].network == network:
+                del self.current_credentials[i]
+                return True
+        return False
+
     def __get_credential_index_by_network__(self,network) -> int:
         for c in range(len(self.current_credentials)):
             if self.current_credentials[c].network == network:

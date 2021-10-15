@@ -131,9 +131,8 @@ Item {
 
             MediumButton {
                 id: thumbnailDirSelectBtn
-                anchors.top: selectThumbnailLbl.bottom
-                anchors.topMargin: 7.5
-                btnLabel: "Browse"
+                anchors.verticalCenter: thumbnailDirField.verticalCenter
+                btnLabel: qsTr("Browse")
                 anchors.left: thumbnailDirField.right
                 anchors.leftMargin: 5
                 anchors.right: parent.right

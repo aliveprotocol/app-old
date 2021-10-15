@@ -14,6 +14,7 @@ Rectangle {
         TextArea {
             id: textArea
             selectByMouse: true
+            color: '#ffffff'
             background: Rectangle {
                 color: 'transparent'
             }

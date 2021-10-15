@@ -31,6 +31,7 @@ Window {
         id: mainView
         visible: false
         toast: toastManager
+        logoutCallback: loggedOutView
     }
 
     // TOASTS
@@ -40,6 +41,15 @@ Window {
     function switchToMainView() {
         setupView.visible = false
         mainView.visible = true
+    }
+
+    // LOGOUT
+    function loggedOutView() {
+        mainView.visible = false
+        setupView.visible = true
+        setupStack.visible = true
+        setupStack.clear()
+        setupStack.push(setupView.welcomeView)
     }
 }
 
