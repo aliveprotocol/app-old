@@ -13,7 +13,8 @@ workerThread = None
 def handle_exit():
     if workerThread.isRunning():
         workerThread.quit()
-        workerThread.wait(QtCore.QDeadlineTimer(3000))
+        while workerThread.isRunning():
+            workerThread.wait(QtCore.QDeadlineTimer(500))
 
 if __name__ == "__main__":
     app = QtGui.QGuiApplication(sys.argv)
