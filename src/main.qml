@@ -48,8 +48,8 @@ Window {
         mainView.visible = false
         setupView.visible = true
         setupStack.visible = true
-        setupStack.clear()
-        setupStack.push(setupView.welcomeView)
+        setupStack.pop(null)
+        setupView.welcomeView.visible = true
     }
 }
 

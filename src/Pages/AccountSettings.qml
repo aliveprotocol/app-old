@@ -8,6 +8,9 @@ Item {
         clip: true
         anchors.fill: parent
         contentHeight: accSeetingsRect.height
+        onVisibleChanged: {
+            hiveUsernameLbl.text = qsTr("Hive Username: %1").arg(credInstance.get_username_by_network('hive'))
+        }
 
         Rectangle {
             id: accSeetingsRect
@@ -25,7 +28,6 @@ Item {
                 id: hiveUsernameLbl
                 height: 22
                 color: '#ffffff'
-                text: qsTr("Hive Username: %1").arg(credInstance ? credInstance.get_username_by_network('hive') : '')
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.top: parent.top
