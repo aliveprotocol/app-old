@@ -8,6 +8,16 @@ Item {
     property alias hiveUsername: hiveUsernameField.text
     property alias hiveKey: hiveKeyField.text
     property alias remembermeChecked: remembermeSwitch.checked
+    onVisibleChanged: {
+        if (visible) {
+            let settingsJson = {}
+            try {
+                settingsJson = JSON.parse(userSettingsInstance.readJson())
+            } catch (e) {}
+            if (settingsJson.hiveAPI)
+                loginHiveAPIDropdown.currentIndex = hiveAPIObj.getIndex(settingsJson.hiveAPI)
+        }
+    }
 
     RoundedBtn {
         id: hiveLoginBackBtn
@@ -104,7 +114,7 @@ Item {
         id: proceedLoginBtn
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: remembermeSwitch.bottom
-        anchors.topMargin: 40
+        anchors.topMargin: 35
         btnLabel: qsTr("Login")
     }
 
@@ -119,10 +129,30 @@ Item {
         textFormat: Text.RichText
         onLinkActivated: (l) => Qt.openUrlExternally(l)
         anchors.top: proceedLoginBtn.bottom
-        anchors.topMargin: 60
+        anchors.topMargin: 35
         anchors.horizontalCenter: parent.horizontalCenter
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 18
+    }
+
+    HiveAPI {
+        id: hiveAPIObj
+    }
+
+    DropdownSelection {
+        id: loginHiveAPIDropdown
+        height: 25
+        width: 347
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 20
+        model: hiveAPIObj.apiOptions
+        onCurrentIndexChanged: {
+            if (userSettingsInstance && userSettingsInstance.get('hiveAPI') !== hiveAPIObj.apiOptions[currentIndex].value && hiveLoginPage.visible) {
+                userSettingsInstance.set('hiveAPI',hiveAPIObj.apiOptions[currentIndex].value)
+                userSettingsInstance.write()
+            }
+        }
     }
 }
 
