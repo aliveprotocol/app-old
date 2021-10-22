@@ -23,6 +23,13 @@ make install
 
 TBD
 
+## Clone
+```
+git clone https://github.com/aliveprotocol/Alive
+cd Alive
+git submodule update --init --recursive
+```
+
 ## Build
 
 1. Install required dependencies.

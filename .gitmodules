@@ -1,0 +1,3 @@
+[submodule "src/Daemon"]
+	path = src/Daemon
+	url = https://github.com/aliveprotocol/Alive-CLI
