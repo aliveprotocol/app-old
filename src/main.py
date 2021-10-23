@@ -7,6 +7,7 @@ import dtc
 import hive
 import credentials
 import settings
+import alive
 
 workerThread = None
 
@@ -30,6 +31,7 @@ if __name__ == "__main__":
     userSettings = settings.UserSettingsInstance()
     engine.rootContext().setContextProperty("userSettingsInstance", userSettings)
 
+    # Accounts
     dtcLogin = dtc.DTCLogin()
     dtcLogin.moveToThread(workerThread)
     dtcLoginBridge = dtc.DTCLoginBridge(dtcLogin)
@@ -54,6 +56,13 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("hiveGetRcBridge", hiveGetRcBridge)
     engine.rootContext().setContextProperty("hiveCommunitySubBridge", hiveCommunitySubBridge)
 
+    # Alive Core
+    adbIns = alive.ADBInstallation(userSettings)
+    adbIns.moveToThread(workerThread)
+    adbInstallStatusBridge = alive.ADBInstallStatusBridge(adbIns)
+    engine.rootContext().setContextProperty("adbInstallStatusBridge", adbInstallStatusBridge)
+
+    # Helpers
     getFilesize = fileHelper.GetFilesize()
     engine.rootContext().setContextProperty("getFilesize", getFilesize)
 
