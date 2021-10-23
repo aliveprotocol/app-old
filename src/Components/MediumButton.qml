@@ -3,6 +3,7 @@ import QtQuick 2.15
 Item {
     property alias btnLabel: label.text
     property alias btnMouseArea: mouseArea
+    property bool disabled: false
     width: 80
     height: 30
 
@@ -29,8 +30,8 @@ Item {
             }
             anchors.rightMargin: 6
             anchors.leftMargin: 6
-            anchors.bottomMargin: 4
-            anchors.topMargin: 4
+            anchors.bottomMargin: 6
+            anchors.topMargin: 6
             anchors.fill: parent
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 15
@@ -43,7 +44,7 @@ Item {
         y: 0
         width: 60
         height: 30
-        hoverEnabled: true
+        hoverEnabled: !disabled
         cursorShape: Qt.PointingHandCursor
     }
 }

@@ -59,7 +59,9 @@ if __name__ == "__main__":
     # Alive Core
     adbIns = alive.ADBInstallation(userSettings)
     adbIns.moveToThread(workerThread)
+    adbInstaller = alive.ADBInstaller(adbIns)
     adbInstallStatusBridge = alive.ADBInstallStatusBridge(adbIns)
+    engine.rootContext().setContextProperty("adbInstaller", adbInstaller)
     engine.rootContext().setContextProperty("adbInstallStatusBridge", adbInstallStatusBridge)
 
     # Helpers

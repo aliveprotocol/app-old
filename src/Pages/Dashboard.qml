@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import '../Components'
 
 Item {
     ScrollView {
@@ -83,6 +84,23 @@ Item {
                     font.pixelSize: 25
                 }
 
+                MediumButton {
+                    id: alivedbInstallBtn
+                    visible: false
+                    btnLabel: qsTr("Install")
+                    anchors.left: alivedbStatusTitle.right
+                    anchors.leftMargin: 15
+                    anchors.verticalCenter: alivedbStatusTitle.verticalCenter
+                    btnMouseArea.onClicked: {
+                        if (!disabled) {
+                            disabled = true
+                            btnLabel = qsTr('Installing...')
+                            width = 110
+                            adbInstaller.startSignal()
+                        }
+                    }
+                }
+
                 Text {
                     id: alivedbStatusDesc
                     text: qsTr('Checking AliveDB installation...')
@@ -98,11 +116,28 @@ Item {
     }
 
     Connections {
+        target: adbInstaller
+        function onAdbInstallResult(result) {
+            alivedbInstallBtn.disabled = false
+            alivedbInstallBtn.btnLabel = qsTr('Install')
+            alivedbInstallBtn.width = 80
+            if (result) {
+                alivedbInstallBtn.visible = false
+                alivedbStatusDesc.text = qsTr('Installation up to date.')
+                toast.show('AliveDB installed successfully',3000,1)
+            } else {
+                toast.show('Alivedb failed to install',3000,3)
+            }
+        }
+    }
+
+    Connections {
         target: adbInstallStatusBridge
         function onAdbInstallStatusResult(result) {
             switch (result) {
             case 0:
-                alivedbStatusDesc.text = qsTr('Installation not found.')
+                alivedbStatusDesc.text = qsTr('Installation not found. Install AliveDB to live stream and manage live chats.')
+                alivedbInstallBtn.visible = true
                 break
             case 1:
                 alivedbStatusDesc.text = qsTr('Installation up to date.')
