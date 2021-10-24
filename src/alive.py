@@ -33,7 +33,7 @@ class ADBInstallation(QtCore.QObject):
     @QtCore.Slot()
     def install(self):
         try:
-            alivedb.alivedb_install_build()
+            alivedb.alivedb_install()
             self.adbInstallResult.emit(True)
         except Exception:
             self.adbInstallResult.emit(False)
