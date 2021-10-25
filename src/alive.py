@@ -1,5 +1,6 @@
 from PySide6 import QtCore
 from Daemon import alivedb
+from Daemon.alivedb_integrity import version as alivedb_version
 from settings import UserSettingsInstance
 
 class ADBInstaller(QtCore.QObject):
@@ -14,7 +15,7 @@ class ADBInstaller(QtCore.QObject):
 
 class ADBInstallStatusBridge(QtCore.QObject):
     startSignal = QtCore.Signal()
-    adbInstallStatusResult = QtCore.Signal(int, arguments=['result'])
+    adbInstallStatusResult = QtCore.Signal(int, str, arguments=['result','version'])
 
     def __init__(self, obj, parent=None):
         super().__init__(parent)
@@ -24,7 +25,7 @@ class ADBInstallStatusBridge(QtCore.QObject):
 
 class ADBInstallation(QtCore.QObject):
     adbInstallResult = QtCore.Signal(bool)
-    adbInstallStatusResult = QtCore.Signal(int)
+    adbInstallStatusResult = QtCore.Signal(int, str)
 
     def __init__(self, settingsInstance: UserSettingsInstance) -> None:
         super().__init__()
@@ -40,4 +41,4 @@ class ADBInstallation(QtCore.QObject):
 
     @QtCore.Slot()
     def getStatus(self):
-        return self.adbInstallStatusResult.emit(alivedb.alivedb_installation_check(dev_mode=self.settingsInstance.get('devMode')))
+        return self.adbInstallStatusResult.emit(alivedb.alivedb_installation_check(dev_mode=self.settingsInstance.get('devMode')),alivedb_version)

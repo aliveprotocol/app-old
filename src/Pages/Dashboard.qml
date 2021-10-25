@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import '../Components'
 
 Item {
+    property string alivedbVersion: ''
     ScrollView {
         id: scrollView
         clip: true
@@ -123,7 +124,7 @@ Item {
             alivedbInstallBtn.width = 80
             if (result) {
                 alivedbInstallBtn.visible = false
-                alivedbStatusDesc.text = qsTr('Installation up to date.')
+                alivedbStatusDesc.text = qsTr('Installation up to date. Version: %1').arg(alivedbVersion)
                 toast.show('AliveDB installed successfully',3000,1)
             } else {
                 toast.show('Alivedb failed to install',3000,3)
@@ -133,17 +134,15 @@ Item {
 
     Connections {
         target: adbInstallStatusBridge
-        function onAdbInstallStatusResult(result) {
+        function onAdbInstallStatusResult(result,version) {
+            alivedbVersion = version
             switch (result) {
             case 0:
                 alivedbStatusDesc.text = qsTr('Installation not found. Install AliveDB to live stream and manage live chats.')
                 alivedbInstallBtn.visible = true
                 break
             case 1:
-                alivedbStatusDesc.text = qsTr('Installation up to date.')
-                break
-            case 2:
-                alivedbStatusDesc.text = qsTr('Installation from source code used.')
+                alivedbStatusDesc.text = qsTr('Installation up to date. Version: %1').arg(version)
                 break
             }
         }
