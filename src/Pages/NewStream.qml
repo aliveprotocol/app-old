@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import Qt.labs.platform 1.1
 import "../Components"
 
@@ -16,249 +17,304 @@ Item {
         id: scrollView
         clip: true
         anchors.fill: parent
-        contentHeight: newStreamRect.height
+        contentHeight: newStreamRect.height + newStreamTabBar.height + (proceedCreateStreamBtn.height * 2)
 
-        Rectangle {
+        TabBar {
+            id: newStreamTabBar
+            width: 300
+            height: 34
+            anchors.left: newStreamRect.left
+            anchors.top: parent.top
+
+            background: Rectangle {
+                color: '#36393f'
+            }
+
+            TabButton {
+                height: 34
+                contentItem: Text {
+                    text: qsTr('Basics')
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 20
+                }
+            }
+
+            TabButton {
+                height: 34
+                contentItem: Text {
+                    text: qsTr('Advanced')
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 20
+                }
+            }
+        }
+
+        StackLayout {
             id: newStreamRect
             anchors {
                 left: parent.left
                 leftMargin: 40
                 right: parent.right
                 rightMargin: 40
-                top: parent.top
+                top: newStreamTabBar.bottom
                 topMargin: 0
             }
-            color: "#36393f"
-            // implicitHeight: 700
+            Layout.fillHeight: false
+            currentIndex: newStreamTabBar.currentIndex
 
-            Text {
-                id: titleLbl
-                height: 22
-                color: "#ffffff"
-                text: qsTr("Title:")
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: parent.top
-                anchors.topMargin: 20
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 18
-            }
+            Item {
+                id: basicsTab
+                width: parent.width
+                height: 470
 
-            AliveTextField {
-                id: titleField
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: titleLbl.bottom
-                anchors.topMargin: 10
-                height: 25
-            }
+                Text {
+                    id: titleLbl
+                    height: 22
+                    color: "#ffffff"
+                    text: qsTr("Title:")
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: parent.top
+                    anchors.topMargin: 10
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 18
+                }
 
-            Text {
-                id: descriptionLbl
-                height: 22
-                color: "#ffffff"
-                text: qsTr("Description:")
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: titleField.bottom
-                anchors.topMargin: 20
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 18
-            }
+                AliveTextField {
+                    id: titleField
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: titleLbl.bottom
+                    anchors.topMargin: 10
+                    height: 25
+                }
 
-            AliveScrollableTextArea {
-                id: descriptionItm
-                height: 100
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: descriptionLbl.bottom
-                anchors.topMargin: 10
-            }
+                Text {
+                    id: descriptionLbl
+                    height: 22
+                    color: "#ffffff"
+                    text: qsTr("Description:")
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: titleField.bottom
+                    anchors.topMargin: 20
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 18
+                }
 
-            Text {
-                id: tagsLbl
-                height: 22
-                color: "#ffffff"
-                text: qsTr("Tags:")
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: descriptionItm.bottom
-                anchors.topMargin: 20
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 18
-            }
+                AliveScrollableTextArea {
+                    id: descriptionItm
+                    height: 100
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: descriptionLbl.bottom
+                    anchors.topMargin: 10
+                }
 
-            AliveTextField {
-                id: tagsField
-                height: 25
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: tagsLbl.bottom
-                anchors.topMargin: 10
-                placeholderText: qsTr("Up to 8, separated by space")
-            }
+                Text {
+                    id: tagsLbl
+                    height: 22
+                    color: "#ffffff"
+                    text: qsTr("Tags:")
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: descriptionItm.bottom
+                    anchors.topMargin: 20
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 18
+                }
 
-            Text {
-                id: selectThumbnailLbl
-                height: 22
-                color: "#ffffff"
-                text: qsTr("Upload a thumbnail:")
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: tagsField.bottom
-                anchors.topMargin: 20
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 18
-            }
+                AliveTextField {
+                    id: tagsField
+                    height: 25
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: tagsLbl.bottom
+                    anchors.topMargin: 10
+                    placeholderText: qsTr("Up to 8, separated by space")
+                }
 
-            AliveTextField {
-                id: thumbnailDirField
-                placeholderText: qsTr("Thumbnail hash goes here")
-                height: 25
-                anchors.right: parent.right
-                anchors.rightMargin: 85
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: selectThumbnailLbl.bottom
-                anchors.topMargin: 10
-            }
+                Text {
+                    id: selectThumbnailLbl
+                    height: 22
+                    color: "#ffffff"
+                    text: qsTr("Upload a thumbnail:")
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: tagsField.bottom
+                    anchors.topMargin: 20
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 18
+                }
 
-            MediumButton {
-                id: thumbnailDirSelectBtn
-                anchors.verticalCenter: thumbnailDirField.verticalCenter
-                btnLabel: qsTr("Browse")
-                anchors.left: thumbnailDirField.right
-                anchors.leftMargin: 5
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                btnMouseArea.onClicked: fileDialog.open()
-            }
+                AliveTextField {
+                    id: thumbnailDirField
+                    placeholderText: qsTr("Thumbnail hash goes here")
+                    height: 25
+                    anchors.right: parent.right
+                    anchors.rightMargin: 85
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: selectThumbnailLbl.bottom
+                    anchors.topMargin: 10
+                }
 
-            Text {
-                id: hiveCommunityLbl
-                height: 22
-                color: '#ffffff'
-                text: qsTr('Hivemind community')
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: thumbnailDirField.bottom
-                anchors.topMargin: 20
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 18
-            }
+                MediumButton {
+                    id: thumbnailDirSelectBtn
+                    anchors.verticalCenter: thumbnailDirField.verticalCenter
+                    btnLabel: qsTr("Browse")
+                    anchors.left: thumbnailDirField.right
+                    anchors.leftMargin: 5
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    btnMouseArea.onClicked: fileDialog.open()
+                }
 
-            DropdownSelection {
-                id: hiveCommunityDropdown
-                height: 25
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: hiveCommunityLbl.bottom
-                anchors.topMargin: 10
-                model: communitiesList
-            }
+                Text {
+                    id: hiveCommunityLbl
+                    height: 22
+                    color: '#ffffff'
+                    text: qsTr('Hivemind community')
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: thumbnailDirField.bottom
+                    anchors.topMargin: 20
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 18
+                }
 
-            /*
-            Text {
-                id: dtcVwLbl
-                height: 22
-                color: "#ffffff"
-                text: qsTr("Avalon vote weight: 1%")
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: thumbnailDirField.bottom
-                anchors.topMargin: 20
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 18
-            }
+                DropdownSelection {
+                    id: hiveCommunityDropdown
+                    height: 25
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: hiveCommunityLbl.bottom
+                    anchors.topMargin: 10
+                    model: communitiesList
+                }
 
-            Slider {
-                id: dtcVwSlider
-                height: 40
-                from: 1
-                to: 100
-                stepSize: 1
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: dtcVwLbl.bottom
-                anchors.topMargin: 10
-                value: 1
-                snapMode: Slider.SnapOnRelease
-                background: Rectangle {
-                    x: dtcVwSlider.leftPadding
-                    y: dtcVwSlider.topPadding + dtcVwSlider.availableHeight / 2 - height / 2
-                    implicitWidth: parent.width
-                    implicitHeight: 4
-                    width: dtcVwSlider.availableWidth
-                    height: implicitHeight
-                    radius: 2
-                    color: "#bdbebf"
+                /*
+                Text {
+                    id: dtcVwLbl
+                    height: 22
+                    color: "#ffffff"
+                    text: qsTr("Avalon vote weight: 1%")
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: thumbnailDirField.bottom
+                    anchors.topMargin: 20
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 18
+                }
 
-                    Rectangle {
-                        width: dtcVwSlider.visualPosition * parent.width
-                        height: parent.height
-                        color: "#ff0000"
+                Slider {
+                    id: dtcVwSlider
+                    height: 40
+                    from: 1
+                    to: 100
+                    stepSize: 1
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: dtcVwLbl.bottom
+                    anchors.topMargin: 10
+                    value: 1
+                    snapMode: Slider.SnapOnRelease
+                    background: Rectangle {
+                        x: dtcVwSlider.leftPadding
+                        y: dtcVwSlider.topPadding + dtcVwSlider.availableHeight / 2 - height / 2
+                        implicitWidth: parent.width
+                        implicitHeight: 4
+                        width: dtcVwSlider.availableWidth
+                        height: implicitHeight
                         radius: 2
+                        color: "#bdbebf"
+
+                        Rectangle {
+                            width: dtcVwSlider.visualPosition * parent.width
+                            height: parent.height
+                            color: "#ff0000"
+                            radius: 2
+                        }
                     }
+                    onMoved: dtcVwLbl.text = "Avalon vote weight: " + dtcVwSlider.value + "%"
                 }
-                onMoved: dtcVwLbl.text = "Avalon vote weight: " + dtcVwSlider.value + "%"
-            }
 
-            Text {
-                id: dtcBurnLbl
-                height: 22
-                color: "#ffffff"
-                text: qsTr("Promote with DTC burn:")
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: dtcVwSlider.bottom
-                anchors.topMargin: 20
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 18
-            }
-
-            AliveTextField {
-                id: dtcBurnField
-                height: 25
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: dtcBurnLbl.bottom
-                anchors.topMargin: 10
-                validator: RegularExpressionValidator { regularExpression: /\d+(\.\d{1,2})?/ }
-            }
-            */
-
-            BigButton {
-                id: proceedCreateStreamBtn
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: hiveCommunityDropdown.bottom
-                anchors.topMargin: 30
-                anchors.bottomMargin: 30
-                btnLabel: qsTr("Create")
-                btnMouseArea.onClicked: {
-                    // basic checks
-                    if (titleField.text === "")
-                        return toast.show(qsTr("Title is required"),3000,3)
-                    else if (tagsField.text === "")
-                        return toast.show(qsTr("Tags are required"),3000,3)
-                    else if (tagsField.text.split(' ').length > 8)
-                        return toast.show(qsTr("Please use only 8 tags maximum"),3000,3)
-                    else if (thumbnailDirField.text === "")
-                        return toast.show(qsTr("Please enter a thumbnail hash or upload one"),3000,3)
-
-                    toast.show('Create stream...',3000,0)
+                Text {
+                    id: dtcBurnLbl
+                    height: 22
+                    color: "#ffffff"
+                    text: qsTr("Promote with DTC burn:")
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: dtcVwSlider.bottom
+                    anchors.topMargin: 20
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 18
                 }
+
+                AliveTextField {
+                    id: dtcBurnField
+                    height: 25
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: dtcBurnLbl.bottom
+                    anchors.topMargin: 10
+                    validator: RegularExpressionValidator { regularExpression: /\d+(\.\d{1,2})?/ }
+                }
+                */
+            }
+
+            Item {
+                id: advancedTab
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                width: parent.width
+                height: 20
+
+                Text {
+                    text: qsTr('Advanced tab here...')
+                    color: '#ffffff'
+                    anchors.top: parent.top
+                    anchors.topMargin: 10
+                }
+            }
+        }
+
+        // TODO: should we fix the position to the bottom right like in peakd?
+        BigButton {
+            id: proceedCreateStreamBtn
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: newStreamRect.bottom
+            anchors.topMargin: 30
+            anchors.bottomMargin: 30
+            btnLabel: qsTr("Create")
+            btnMouseArea.onClicked: {
+                // basic checks
+                if (titleField.text === "")
+                    return toast.show(qsTr("Title is required"),3000,3)
+                else if (tagsField.text === "")
+                    return toast.show(qsTr("Tags are required"),3000,3)
+                else if (tagsField.text.split(' ').length > 8)
+                    return toast.show(qsTr("Please use only 8 tags maximum"),3000,3)
+                else if (thumbnailDirField.text === "")
+                    return toast.show(qsTr("Please enter a thumbnail hash or upload one"),3000,3)
+
+                toast.show('Create stream...',3000,0)
             }
         }
     }
