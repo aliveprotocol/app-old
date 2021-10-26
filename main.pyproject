@@ -16,6 +16,7 @@
         "src/Setup.qml",
         "src/Components/AliveScrollableTextArea.qml",
         "src/Components/AliveTextField.qml",
+        "src/Components/AliveTextFieldFormGroup.qml",
         "src/Components/ColumnMenuButton.qml",
         "src/Components/BigButton.qml",
         "src/Components/DropdownSelection.qml",

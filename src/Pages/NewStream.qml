@@ -70,28 +70,15 @@ Item {
                 width: parent.width
                 height: 470
 
-                Text {
-                    id: titleLbl
-                    height: 22
-                    color: "#ffffff"
-                    text: qsTr("Title:")
+                AliveTextFieldFormGroup {
+                    id: titleField
+                    fieldLabel: qsTr('Title:')
                     anchors.left: parent.left
                     anchors.leftMargin: 0
-                    anchors.top: parent.top
-                    anchors.topMargin: 10
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 18
-                }
-
-                AliveTextField {
-                    id: titleField
                     anchors.right: parent.right
                     anchors.rightMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                    anchors.top: titleLbl.bottom
+                    anchors.top: parent.top
                     anchors.topMargin: 10
-                    height: 25
                 }
 
                 Text {
@@ -118,59 +105,34 @@ Item {
                     anchors.topMargin: 10
                 }
 
-                Text {
-                    id: tagsLbl
-                    height: 22
-                    color: "#ffffff"
-                    text: qsTr("Tags:")
+                AliveTextFieldFormGroup {
+                    id: tagsField
+                    fieldLabel: qsTr('Tags:')
+                    fieldPlaceholder: qsTr('Up to 8, separated by space')
                     anchors.left: parent.left
                     anchors.leftMargin: 0
                     anchors.top: descriptionItm.bottom
                     anchors.topMargin: 20
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 18
-                }
-
-                AliveTextField {
-                    id: tagsField
-                    height: 25
                     anchors.right: parent.right
                     anchors.rightMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                    anchors.top: tagsLbl.bottom
-                    anchors.topMargin: 10
-                    placeholderText: qsTr("Up to 8, separated by space")
                 }
 
-                Text {
-                    id: selectThumbnailLbl
-                    height: 22
-                    color: "#ffffff"
-                    text: qsTr("Upload a thumbnail:")
+                AliveTextFieldFormGroup {
+                    id: thumbnailDirField
+                    fieldLabel: qsTr('Upload a thumbnail:')
+                    fieldPlaceholder: qsTr('Thumbnail hash goes here')
                     anchors.left: parent.left
                     anchors.leftMargin: 0
                     anchors.top: tagsField.bottom
-                    anchors.topMargin: 20
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 18
-                }
-
-                AliveTextField {
-                    id: thumbnailDirField
-                    placeholderText: qsTr("Thumbnail hash goes here")
-                    height: 25
+                    anchors.topMargin: 25
                     anchors.right: parent.right
                     anchors.rightMargin: 85
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                    anchors.top: selectThumbnailLbl.bottom
-                    anchors.topMargin: 10
                 }
 
                 MediumButton {
                     id: thumbnailDirSelectBtn
                     anchors.verticalCenter: thumbnailDirField.verticalCenter
+                    anchors.verticalCenterOffset: 15
                     btnLabel: qsTr("Browse")
                     anchors.left: thumbnailDirField.right
                     anchors.leftMargin: 5
