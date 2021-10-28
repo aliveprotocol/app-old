@@ -68,7 +68,7 @@ Item {
             Item {
                 id: basicsTab
                 width: parent.width
-                height: 470
+                height: 420
 
                 AliveTextFieldFormGroup {
                     id: titleField
@@ -139,6 +139,8 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     btnMouseArea.onClicked: fileDialog.open()
+                    width: 80
+                    height: 30
                 }
 
                 Text {
@@ -248,11 +250,59 @@ Item {
                 width: parent.width
                 height: 20
 
-                Text {
-                    text: qsTr('Advanced tab here...')
-                    color: '#ffffff'
+                AliveTextFieldFormGroup {
+                    id: permlinkField
+                    fieldLabel: qsTr('Post permlink:')
+                    fieldPlaceholder: qsTr('Auto-generated if left blank')
                     anchors.top: parent.top
                     anchors.topMargin: 10
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                }
+
+                Text {
+                    id: benefLbl
+                    text: qsTr('Post beneficiaries')
+                    height: 22
+                    color: "#ffffff"
+                    anchors.leftMargin: 0
+                    anchors.top: permlinkField.bottom
+                    anchors.topMargin: 20
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 18
+                }
+
+                AliveTextField {
+                    id: newBenefUserField
+                    placeholderText: qsTr('New beneficiary username')
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.top: benefLbl.bottom
+                    anchors.topMargin: 10
+                    width: 300
+                }
+
+                AliveTextField {
+                    id: newBenefWeightField
+                    placeholderText: qsTr('%')
+                    anchors.left: newBenefUserField.right
+                    anchors.leftMargin: 10
+                    anchors.top: benefLbl.bottom
+                    anchors.topMargin: 10
+                    anchors.verticalCenter: newBenefUserField.verticalCenter
+                    width: 60
+                }
+
+                MediumButton {
+                    id: newBenefAddBtn
+                    btnLabel: '+'
+                    anchors.verticalCenter: newBenefWeightField.verticalCenter
+                    anchors.left: newBenefWeightField.right
+                    anchors.leftMargin: 10
+                    width: 40
+                    height: 30
                 }
             }
         }

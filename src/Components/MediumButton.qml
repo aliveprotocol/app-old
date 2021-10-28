@@ -4,8 +4,6 @@ Item {
     property alias btnLabel: label.text
     property alias btnMouseArea: mouseArea
     property bool disabled: false
-    width: 80
-    height: 30
 
     Rectangle {
         id: rectangle
@@ -42,8 +40,8 @@ Item {
         id: mouseArea
         x: 0
         y: 0
-        width: 60
-        height: 30
+        width: parent.width
+        height: parent.height
         hoverEnabled: !disabled
         cursorShape: Qt.PointingHandCursor
     }
