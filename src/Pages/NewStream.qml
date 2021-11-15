@@ -317,13 +317,13 @@ Item {
             btnLabel: qsTr("Create")
             btnMouseArea.onClicked: {
                 // basic checks
-                if (titleField.text === "")
+                if (titleField.fieldValue === "")
                     return toast.show(qsTr("Title is required"),3000,3)
-                else if (tagsField.text === "")
+                else if (tagsField.fieldValue === "")
                     return toast.show(qsTr("Tags are required"),3000,3)
-                else if (tagsField.text.split(' ').length > 8)
+                else if (tagsField.fieldValue.split(' ').length > 8)
                     return toast.show(qsTr("Please use only 8 tags maximum"),3000,3)
-                else if (thumbnailDirField.text === "")
+                else if (thumbnailDirField.fieldValue === "")
                     return toast.show(qsTr("Please enter a thumbnail hash or upload one"),3000,3)
 
                 toast.show('Create stream...',3000,0)
@@ -340,7 +340,7 @@ Item {
         onAccepted: {
             let selectedFSize = getFilesize.getFSize(fileDialog.currentFile)
             if (selectedFSize > 0 && selectedFSize <= 4194304) // 4 MB limit
-                thumbnailDirField.text = fileDialog.currentFile
+                thumbnailDirField.fieldValue = fileDialog.currentFile
             else
                 toast.show("Thumbnail file size must be under 4 MB",3000,3)
         }
