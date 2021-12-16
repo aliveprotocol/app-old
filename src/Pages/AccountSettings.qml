@@ -41,6 +41,8 @@ Item {
                 anchors.left: hiveUsernameLbl.right
                 anchors.leftMargin: 10
                 anchors.verticalCenter: hiveUsernameLbl.verticalCenter
+                width: 70
+                height: 30
                 btnLabel: qsTr("Logout")
                 btnMouseArea.onClicked: {
                     credInstance.remove_credential('hive')

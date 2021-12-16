@@ -87,11 +87,13 @@ Item {
 
                 MediumButton {
                     id: alivedbInstallBtn
-                    visible: false
+                    visible: true
                     btnLabel: qsTr("Install")
                     anchors.left: alivedbStatusTitle.right
                     anchors.leftMargin: 15
                     anchors.verticalCenter: alivedbStatusTitle.verticalCenter
+                    width: 60
+                    height: 30
                     btnMouseArea.onClicked: {
                         if (!disabled) {
                             disabled = true
