@@ -47,6 +47,16 @@ class HiveLogin(QtCore.QObject):
                 return self.hiveLoginResult.emit(0)
         return self.hiveLoginResult.emit(3)
 
+class HiveAccExistsBridge(QtCore.QObject):
+    startSignal = QtCore.Signal(str)
+    hiveAccExistsResult = QtCore.Signal(bool, arguments=['result'])
+
+    def __init__(self, obj, parent=None):
+        super().__init__(parent)
+        self.m_obj = obj
+        self.m_obj.hiveAccExistsResult.connect(self.hiveAccExistsResult)
+        self.startSignal.connect(self.m_obj.exists)
+
 class HivePowerBridge(QtCore.QObject):
     startSignal = QtCore.Signal(str)
     hivePowerResult = QtCore.Signal(float, arguments=['result'])
@@ -78,6 +88,7 @@ class HiveCommunitySubBridge(QtCore.QObject):
         self.startSignal.connect(self.m_obj.getCommunitySub)
 
 class HiveAccount(QtCore.QObject):
+    hiveAccExistsResult = QtCore.Signal(bool)
     hivePowerResult = QtCore.Signal(float)
     hiveRcResult = QtCore.Signal(str)
     hiveCommunitySubResult = QtCore.Signal(str)
@@ -85,6 +96,20 @@ class HiveAccount(QtCore.QObject):
     def __init__(self, settingsInstance: UserSettingsInstance) -> None:
         super().__init__()
         self.settingsInstance = settingsInstance
+
+    @QtCore.Slot(bool)
+    def exists(self,username):
+        hive_accreq = {
+            'jsonrpc': '2.0',
+            'id': 1,
+            'method': 'condenser_api.get_accounts',
+            'params': [[username]]
+        }
+        account = requests.post(self.settingsInstance.get('hiveAPI'),json=hive_accreq)
+        if account.status_code != 200 or 'error' in account.json() or len(account.json()['result']) == 0:
+            return self.hiveAccExistsResult.emit(False)
+        else:
+            return self.hiveAccExistsResult.emit(True)
 
     @QtCore.Slot(str)
     def getHP(self,username):

@@ -331,10 +331,7 @@ Item {
                     anchors.leftMargin: 10
                     width: 40
                     height: 30
-                    btnMouseArea.onClicked: {
-                        hiveBeneficiaries.addAccount(newBenefUserField.text,parseFloat(newBenefWeightField.text)*100)
-                        hiveBenefListViewRect.updateHiveBeneficiaries()
-                    }
+                    btnMouseArea.onClicked: hiveAccExistsBridge.startSignal(newBenefUserField.text)
                 }
 
                 Rectangle {
@@ -444,6 +441,18 @@ Item {
                     communitiesList.push({ value: r.result[i][0], text: r.result[i][1] + ' (' + r.result[i][0] + ')' })
             }
             hiveCommunityDropdown.model = communitiesList
+        }
+    }
+
+    Connections {
+        target: hiveAccExistsBridge
+        function onHiveAccExistsResult(result) {
+            if (result) {
+                hiveBeneficiaries.addAccount(newBenefUserField.text,parseFloat(newBenefWeightField.text)*100)
+                hiveBenefListViewRect.updateHiveBeneficiaries()
+            } else {
+                toast.show(qsTr('Hive account %1 does not exist').arg(newBenefUserField.text),3000,3)
+            }
         }
     }
 }

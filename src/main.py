@@ -49,9 +49,11 @@ if __name__ == "__main__":
 
     hiveAcc = hive.HiveAccount(userSettings)
     hiveAcc.moveToThread(workerThread)
+    hiveAccExistsBridge = hive.HiveAccExistsBridge(hiveAcc)
     hivePowerBridge = hive.HivePowerBridge(hiveAcc)
     hiveGetRcBridge = hive.HiveRcBridge(hiveAcc)
     hiveCommunitySubBridge = hive.HiveCommunitySubBridge(hiveAcc)
+    engine.rootContext().setContextProperty("hiveAccExistsBridge", hiveAccExistsBridge)
     engine.rootContext().setContextProperty("hivePowerBridge", hivePowerBridge)
     engine.rootContext().setContextProperty("hiveGetRcBridge", hiveGetRcBridge)
     engine.rootContext().setContextProperty("hiveCommunitySubBridge", hiveCommunitySubBridge)
