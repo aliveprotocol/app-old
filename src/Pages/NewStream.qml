@@ -25,29 +25,38 @@ Item {
             height: 34
             anchors.left: newStreamRect.left
             anchors.top: parent.top
-
             background: Rectangle {
-                color: '#36393f'
+                color: '#ffffff'
+                height: 32.5
             }
 
             TabButton {
                 height: 34
+                background: Rectangle {
+                    color: newStreamTabBar.currentIndex === 0 ? "#ff5555" : "#36393f"
+                }
                 contentItem: Text {
                     text: qsTr('Basics')
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 20
+                    color: '#ffffff'
+
                 }
             }
 
             TabButton {
                 height: 34
+                background: Rectangle {
+                    color: newStreamTabBar.currentIndex === 1 ? "#ff5555" : "#36393f"
+                }
                 contentItem: Text {
                     text: qsTr('Advanced')
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.pixelSize: 20
+                    color: '#ffffff'
                 }
             }
         }
