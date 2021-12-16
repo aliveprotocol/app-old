@@ -10,7 +10,7 @@ Item {
         anchors.fill: parent
         contentHeight: dashboardRect.height
         onVisibleChanged: {
-            if (visible)
+            if (visible && !alivedbVersion)
                 adbInstallStatusBridge.startSignal()
         }
 

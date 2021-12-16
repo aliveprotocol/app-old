@@ -147,8 +147,8 @@ Item {
 
                 AliveTextFieldFormGroup {
                     id: thumbnailDirField
-                    fieldLabel: qsTr('Upload a thumbnail:')
-                    fieldPlaceholder: qsTr('Thumbnail hash goes here')
+                    fieldLabel: qsTr('Thumbnail Hash or Upload:')
+                    fieldPlaceholder: qsTr('IPFS hash or Skylink accepted')
                     anchors.left: parent.left
                     anchors.leftMargin: 0
                     anchors.top: tagsField.bottom

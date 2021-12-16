@@ -3,6 +3,24 @@ import QtQuick.Controls 2.15
 import "../Components"
 
 Item {
+    property var uploadProtocols: [
+        { value: 'ipfs', text: 'IPFS' },
+        { value: 'sia', text: 'Skynet' }
+    ]
+    property var uploadEndpoints: [
+        // IPFS
+        { value: 'https://uploader.oneloved.tube', text: 'OneLoveIPFS', protocol: 'ipfs' },
+        { value: '/ip4/127.0.0.1/tcp/5001/http', text: 'Local IPFS node', protocol: 'ipfs' },
+
+        // Skynet
+        { value: 'https://siasky.net', text: 'siasky.net', protocol: 'sia' },
+        { value: 'https://skydrain.net', text: 'skydrain.net', protocol: 'sia' },
+
+        // Debug (dev mode only)
+        ...(devModeSwitch.checked ? [{ value: 'debug', text: 'Debug Endpoint', protocol: 'custom' }] : [])
+    ]
+    readonly property int settingIndentation: 150
+
     ScrollView {
         id: scrollView
         clip: true
@@ -18,6 +36,10 @@ Item {
                     devModeSwitch.checked = true
                 if (settingsJson.hiveAPI)
                     hiveAPINodeDropdown.currentIndex = hiveAPIObj.getIndex(settingsJson.hiveAPI)
+                if (settingsJson.uploadProtocol)
+                    uploadProtocolDropdown.currentIndex = getIndex(uploadProtocols,settingsJson.uploadProtocol)
+                if (settingsJson.uploadEndpoint)
+                    uploadEndpointDropdown.currentIndex = getIndex(filterUploadEndpoints(settingsJson.uploadProtocol),settingsJson.uploadEndpoint)
             }
         }
 
@@ -49,8 +71,8 @@ Item {
 
             Switch {
                 id: devModeSwitch
-                anchors.leftMargin: 20
-                anchors.left: devModeLbl.right
+                anchors.leftMargin: settingIndentation
+                anchors.left: parent.left
                 anchors.verticalCenter: devModeLbl.verticalCenter
 
                 indicator: Rectangle {
@@ -94,24 +116,78 @@ Item {
             DropdownSelection {
                 id: hiveAPINodeDropdown
                 height: 25
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: hiveAPINodeLbl.right
-                anchors.leftMargin: 15
+                width: 200
+                anchors.leftMargin: settingIndentation
+                anchors.left: parent.left
                 anchors.verticalCenter: hiveAPINodeLbl.verticalCenter
                 model: hiveAPIObj.apiOptions
             }
 
+            // UPLOADER SETTINGS
+            // Upload Protocol (IPFS or Skynet)
+            Text {
+                id: uploadProtocolLbl
+                height: 22
+                color: "#ffffff"
+                text: qsTr("Upload Protocol")
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.top: hiveAPINodeLbl.bottom
+                anchors.topMargin: 20
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 18
+            }
+
+            DropdownSelection {
+                id: uploadProtocolDropdown
+                height: 25
+                width: 100
+                anchors.leftMargin: settingIndentation
+                anchors.left: parent.left
+                anchors.verticalCenter: uploadProtocolLbl.verticalCenter
+                model: [
+                    { value: 'ipfs', text: 'IPFS' },
+                    { value: 'sia', text: 'Skynet' }
+                ]
+            }
+
+            // Upload Endpoint
+            Text {
+                id: uploadEndpointLbl
+                height: 22
+                color: "#ffffff"
+                text: qsTr("Upload Endpoint")
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.top: uploadProtocolLbl.bottom
+                anchors.topMargin: 20
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 18
+            }
+
+            DropdownSelection {
+                id: uploadEndpointDropdown
+                height: 25
+                width: 200
+                anchors.leftMargin: settingIndentation
+                anchors.left: parent.left
+                anchors.verticalCenter: uploadEndpointLbl.verticalCenter
+                model: filterUploadEndpoints(uploadProtocols[uploadProtocolDropdown.currentIndex].value)
+            }
+
+            // SAVE
             BigButton {
                 id: settingsSaveBtn
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: hiveAPINodeLbl.bottom
+                anchors.top: uploadEndpointLbl.bottom
                 anchors.topMargin: 30
                 anchors.bottomMargin: 30
                 btnLabel: qsTr("Save")
                 btnMouseArea.onClicked: {
                     userSettingsInstance.set("devMode",boolToStr(devModeSwitch.checked))
                     userSettingsInstance.set("hiveAPI",hiveAPINodeDropdown.model[hiveAPINodeDropdown.currentIndex].value)
+                    userSettingsInstance.set("uploadProtocol",uploadProtocolDropdown.model[uploadProtocolDropdown.currentIndex].value)
+                    userSettingsInstance.set("uploadEndpoint",uploadEndpointDropdown.model[uploadEndpointDropdown.currentIndex].value)
                     userSettingsInstance.write()
                     toast.show(qsTr("Saved successfully"),3000,0)
                 }
@@ -125,5 +201,20 @@ Item {
 
     function strToBool(val) {
         return val === "on"
+    }
+
+    function getIndex(model = [], val = '') {
+        for (let i in model)
+            if (model[i].value === val)
+                return i
+        return 0
+    }
+
+    function filterUploadEndpoints(protocol = 'ipfs') {
+        let filtered = []
+        for (let i in uploadEndpoints)
+            if (uploadEndpoints[i].protocol === protocol || uploadEndpoints[i].protocol === 'custom')
+                filtered.push(uploadEndpoints[i])
+        return filtered
     }
 }
