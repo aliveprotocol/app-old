@@ -106,7 +106,7 @@ class HiveAccount(QtCore.QObject):
             return self.hivePowerResult.emit("Error")
         elif props.status_code != 200:
             return self.hivePowerResult.emit("Error")
-        self.hivePowerResult.emit(float(props.json()['result']['total_vesting_fund_hive'][:-5]) / float(props.json()['result']['total_vesting_shares'][:-6]) * float(account.json()['result'][0]['vesting_shares'][:-6]))
+        self.hivePowerResult.emit(float(props.json()['result']['total_vesting_fund_hive'][:-5]) / float(props.json()['result']['total_vesting_shares'][:-6]) * (float(account.json()['result'][0]['vesting_shares'][:-6]) - float(account.json()['result'][0]['delegated_vesting_shares'][:-6]) + float(account.json()['result'][0]['received_vesting_shares'][:-6])))
 
     @QtCore.Slot(str)
     def getRC(self,username):

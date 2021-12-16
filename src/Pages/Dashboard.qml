@@ -87,7 +87,7 @@ Item {
 
                 MediumButton {
                     id: alivedbInstallBtn
-                    visible: true
+                    visible: false
                     btnLabel: qsTr("Install")
                     anchors.left: alivedbStatusTitle.right
                     anchors.leftMargin: 15

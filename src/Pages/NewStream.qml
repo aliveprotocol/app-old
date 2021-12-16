@@ -13,6 +13,11 @@ Item {
         }
     }
 
+    HiveBeneficiaries {
+        id: hiveBeneficiaries
+        network: 'hive'
+    }
+
     ScrollView {
         id: scrollView
         clip: true
@@ -28,12 +33,22 @@ Item {
             background: Rectangle {
                 color: '#ffffff'
                 height: 32.5
+
+                MouseArea {
+                    cursorShape: Qt.PointingHandCursor
+                    anchors.fill: parent
+                }
             }
 
             TabButton {
                 height: 34
                 background: Rectangle {
                     color: newStreamTabBar.currentIndex === 0 ? "#ff5555" : "#36393f"
+
+                    MouseArea {
+                        cursorShape: Qt.PointingHandCursor
+                        anchors.fill: parent
+                    }
                 }
                 contentItem: Text {
                     text: qsTr('Basics')
@@ -42,7 +57,6 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 20
                     color: '#ffffff'
-
                 }
             }
 
@@ -50,6 +64,11 @@ Item {
                 height: 34
                 background: Rectangle {
                     color: newStreamTabBar.currentIndex === 1 ? "#ff5555" : "#36393f"
+
+                    MouseArea {
+                        cursorShape: Qt.PointingHandCursor
+                        anchors.fill: parent
+                    }
                 }
                 contentItem: Text {
                     text: qsTr('Advanced')
@@ -312,6 +331,66 @@ Item {
                     anchors.leftMargin: 10
                     width: 40
                     height: 30
+                    btnMouseArea.onClicked: {
+                        hiveBeneficiaries.addAccount(newBenefUserField.text,parseFloat(newBenefWeightField.text)*100)
+                        hiveBenefListViewRect.updateHiveBeneficiaries()
+                    }
+                }
+
+                Rectangle {
+                    id: hiveBenefListViewRect
+                    anchors.left: parent.left
+                    anchors.top: newBenefUserField.bottom
+                    anchors.topMargin: 15
+                    width: 300
+                    height: hiveBenefListView.model.length * 36
+                    color: 'transparent'
+
+                    Component {
+                        id: hiveBenefDelegate
+                        Item {
+                            width: 300
+                            height: 36
+                            Text {
+                                id: benefItmLbl
+                                text: modelData.account + ' (' + (modelData.weight/100) + '%)'
+                                font.pixelSize: 15
+                                color: '#ffffff'
+                                anchors.top: parent.top
+                                anchors.topMargin: 5
+                            }
+                            MediumButton {
+                                btnLabel: 'Remove'
+                                anchors.left: parent.left
+                                anchors.leftMargin: 225
+                                anchors.top: parent.top
+                                anchors.topMargin: 3
+                                anchors.bottom: parent.bottom
+                                anchors.bottomMargin: 3
+                                width: 75
+                                height: 30
+                                btnMouseArea.onClicked: {
+                                    hiveBeneficiaries.removeAccount(modelData.account)
+                                    hiveBenefListViewRect.updateHiveBeneficiaries()
+                                }
+                            }
+                        }
+                    }
+
+                    ListView {
+                        id: hiveBenefListView
+                        anchors.fill: parent
+                        model: hiveBeneficiaries.accounts
+                        delegate: hiveBenefDelegate
+                        focus: true
+                    }
+
+                    function updateHiveBeneficiaries() {
+                        hiveBenefListView.model = hiveBeneficiaries.accounts
+                        hiveBenefListViewRect.height = hiveBenefListView.model.length * 36
+                        newBenefUserField.text = ''
+                        newBenefWeightField.text = ''
+                    }
                 }
             }
         }

@@ -29,7 +29,7 @@ Item {
     NetworkSelect {
         id: networkSelectAvalon
         visible: false
-        networkSelectAvalonMouseArea.onClicked: stack.push(dtcLoginPage)
+        networkSelectAvalonMouseArea.onClicked: toast.show(qsTr("Avalon support coming soon"),3000,0) // stack.push(dtcLoginPage)
         networkSelectHiveMouseArea.onClicked: stack.push(hiveLoginPage)
         networkSelectBackMouseArea.onClicked: stack.pop()
     }

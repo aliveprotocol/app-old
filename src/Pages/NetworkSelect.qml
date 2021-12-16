@@ -45,6 +45,7 @@ Item {
         clip: false
     }
 
+    // TODO: Organize into ListView if we add support for BLURT network
     BigButton {
         id: networkSelectAvalon
         width: 125

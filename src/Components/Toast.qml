@@ -21,7 +21,7 @@ Rectangle {
       * @param {real} duration Duration to show in milliseconds, defaults to 3000
       * @param {real} toastType Type of toast to show (0: info, 1: success, 2: warning, 3: error)
       */
-    function show(text, duration, toastType) {
+    function show(text, duration = 3000, toastType = 0) {
         message.text = text;
         if (typeof duration !== "undefined") // checks if parameter was passed
             time = Math.max(duration, 2 * fadeTime);

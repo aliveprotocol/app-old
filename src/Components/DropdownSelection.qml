@@ -15,7 +15,7 @@ ComboBox {
             elide: Text.ElideRight
             verticalAlignment: Text.AlignVCenter
         }
-        highlighted: comboBox.highlightedIndex == index
+        highlighted: comboBox.highlightedIndex === index
         background: Rectangle {
             color: itemDelegate.highlighted ? "#ff5555" : "#000000"
         }
