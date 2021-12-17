@@ -145,10 +145,7 @@ Item {
                 anchors.leftMargin: settingIndentation
                 anchors.left: parent.left
                 anchors.verticalCenter: uploadProtocolLbl.verticalCenter
-                model: [
-                    { value: 'ipfs', text: 'IPFS' },
-                    { value: 'sia', text: 'Skynet' }
-                ]
+                model: uploadProtocols
             }
 
             // Upload Endpoint
