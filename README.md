@@ -1,3 +1,5 @@
+### ⚠️This repository has been succeeded by the [React-TypeScript](https://github.com/aliveprotocol/broadcaster) implementation.
+
 # Alive
 
 A Qt Quick desktop app for decentralized live streaming on Hive and Avalon.
